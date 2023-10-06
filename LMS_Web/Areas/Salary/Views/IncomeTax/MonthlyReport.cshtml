@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Income tax monthly report";
+    Layout = "~/Areas/Salary/Views/Shared/_Layout.cshtml";
+}
+
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-8">
+        <form method="post" asp-action="MonthlyReport" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header">Income Tax Report</h1>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Station</label>
+                        <span class="text-danger">*</span>
+                        @Html.DropDownList("StationId", new SelectList(ViewBag.Stations, "Id", "Name"), "Select Station", new { @class = "form-control",@required="required" })
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">From Grade</label>
+                        @Html.DropDownList("FromGradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select From Grade", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Month</label>
+                        <select required="required" name="month" class="form-control" tabindex="10" id="Month">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Wings</label>
+                        @Html.DropDownList("WingId", new SelectList(ViewBag.Wings, "Id", "Name"), "Select Wings", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">To Grade</label>
+                        @Html.DropDownList("ToGradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select From Grade", new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Year</label>
+                        <select required="required" id="ddlYears" name="year" class="form-control"></select>
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-4 text-center">
+                <input type="submit" name="btnValue" id="submitBtn" formtarget="_blank" value="Print" class="btn btn-primary form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Report").css("display", "block");
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            $("#Month").val(month);
+
+            var currentYear = year + 10;
+            var ddlYears = document.getElementById("ddlYears");
+
+            for (var i = 2022; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                if (i == year) {
+                    option.setAttribute("selected", year);
+                }
+                ddlYears.appendChild(option);
+            }
+            //var currentYear = (new Date()).getFullYear() + 10;
+            //var ddlYears = document.getElementById("ddlYears");
+
+            //for (var i = 2022; i <= currentYear; i++) {
+            //    var option = document.createElement("OPTION");
+            //    option.innerHTML = i;
+            //    option.value = i;
+            //    ddlYears.appendChild(option);
+            //}
+        });
+
+    </script>
+}

@@ -1,0 +1,147 @@
+﻿@model LMS_Web.Areas.Salary.Models.UserDeduction
+@{
+    ViewData["Title"] = "Add";
+}
+@Html.AntiForgeryToken()
+<div class="container-fluid">
+    <div class="row justify-content-center mt-4 mb-2">
+        <div class="col-md-8">
+            <form method="post" asp-action="AddUserDeduction" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+                <div class="text-center mb-4">
+                    <h1 class="h5 mb-3 font-weight-bold card-header border">User Specific Deduction</h1>
+                </div>
+                <div id="MessageDiv" style="text-align: center;">
+                    <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                    <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+                </div>
+                <input type="hidden" id="id" asp-for="Id" class="form-control" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Deduction Type</label>
+                            <span class="text-danger">*</span>
+                            @Html.DropDownList("DeductionId", new SelectList(ViewBag.Deduction, "Id", "Name"), "Select Deduction", new { @class = "form-control", @required = "required" })
+
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Amount" class="control-label"></label>
+                            <span class="text-danger">*</span>
+                            <input id="amount" type="number" step="any" required="required" asp-for="Amount" class="form-control" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" id="monthDiv">
+                            <label asp-for="Month" class="control-label"></label>
+                            <select asp-for="Month" class="form-control" tabindex="10"  id="Month">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">App User</label>
+                            <span class="text-danger">*</span>
+                            @Html.DropDownList("AppUserId", new SelectList(ViewBag.users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required" })
+
+                        </div>
+                        <div class="form-group" style="margin-top: 18%;">
+                            <input id="IsSameEveryMonth" asp-for="IsSameEveryMonth" onclick="CheckInfo()" />
+                            <label class="control-label">Is Same In Every Month</label>
+                            <span asp-validation-for="IsSameEveryMonth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" id="yearDiv">
+                            <label asp-for="Year" class="control-label"></label>
+                            <input type="hidden" value="@Model.Year" id="hiddenYear" />
+                            <select id="ddlYears" asp-for="Year" class="form-control"></select>
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Remarks" class="control-label"></label>
+                    <input id="Remarks" type="text" step="any" asp-for="Remarks" class="form-control" />
+                    <span asp-validation-for="Remarks" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-4 text-center">
+                    <a class="btn btn-secondary" asp-action="List">List</a>
+                    <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+@section Scripts
+    {
+    <script>
+
+        $(document).ready(function () {
+            $("#Deduction").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+            LoadYear()
+            CheckInfo()
+
+
+        });
+
+        function LoadYear() {
+
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            $("#Month").val(month);
+
+            var currentYear = year;
+            var cValue = $("#hiddenYear").val();
+            if (cValue == 0) {
+                cValue = currentYear;
+            }
+            var ddlYears = document.getElementById("ddlYears");
+
+            for (var i = 2020; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                console.log(option)
+                option.innerHTML = i;
+                option.value = i;
+                if (cValue == i) {
+                    option.selected = "selected";
+                }
+                ddlYears.appendChild(option);
+            }
+        };
+        function CheckInfo() {
+            if ($("#IsSameEveryMonth").is(':checked')) {
+                $("#monthDiv").hide();
+                $("#yearDiv").hide();
+            }
+            else {
+                $("#monthDiv").show();
+                $("#yearDiv").show();
+
+            }
+        }
+
+    </script>
+}
+

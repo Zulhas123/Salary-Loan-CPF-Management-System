@@ -1,0 +1,130 @@
+﻿@using LMS_Web.Models
+@model LMS_Web.Areas.Settings.Models.UserTax
+@{
+    bool isFound = ViewBag.IsFound;
+}
+@if (!isFound)
+{
+    <div id="MessageDiv" style="text-align: center;">
+        <label style="color:red"><span id="ErrorMessageDiv" style="color: red">No tax added for this user for selected fiscal year</span></label>
+    </div>
+}
+else{
+
+<div class="bg-light mt-4 p-3" id="taxView">
+    <div class="table-responsive">
+        <input type="hidden" id="FiscalYearId" value="@ViewBag.UserTax.FiscalYearId" />
+        <table class="table table-striped table-borderless custrom-table mb-2" id="table">            
+            <thead>
+                <tr>
+                    <th>Total Amount</th>
+                    <th>Total Installment</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                    <td>@ViewBag.UserTax.TotalAmount</td>
+                    <td>@ViewBag.UserTax.TotalInstallment</td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editInstallmentModal">Details</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal" id="editInstallmentModal" tabindex="-1" role="dialog" aria-labelledby="editInstallmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editInstallmentModalLabel">User Tax Installment Info</h5>
+
+                        <button type="button" class="close" onclick="LoadTax()" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="loanId" id="aloanId" />
+                        <div class="row justify-content-between">
+                            <table class="table table-striped table-borderless custrom-table mb-2" id="table">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Month</th>
+                                        <th>Installment No</th>
+                                        <th>Installment Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.TaxInstallmentInfo)
+                                    {
+                                        <tr>
+                                            <input type="hidden" value="@item.AppUserId" id="AppUserId" class="form-control" />
+                                            <td>@item.Year</td>
+                                            <td>@item.Month</td>
+                                            <td>@item.InstallmentNo</td>
+                                            <td><input type="text" id="MonthlyDeduction_@item.Id" value="@item.MonthlyDeduction" class="form-control" /></td>
+                                            @if (@item.Year > DateTime.Now.Year || (@item.Year == DateTime.Now.Year && @item.Month >= DateTime.Now.Month))
+                                            {
+                                                <td>
+                                                    <button type="button" class="btn btn-info btn-lg" onclick="TaxInstallmentInfo(@item.Id)">Update</button>
+                                                </td>
+                                            }
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onchange="LoadTax()" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $("#Tax").css('display', 'block');
+        $('#table').DataTable();
+    });
+    function TaxInstallmentInfo(id) {
+        var amount = $("#MonthlyDeduction_" + id).val();
+        $.ajax({
+            type: "GET",
+            url: "/Salary/Tax/UpdateUserTaxInstallment",
+            data: { id: id, monthlyDeduction: amount },
+            success: function (res) {
+                if (res == true) {
+                    alert("Update Successfuly");
+                } else {
+                    alert("Failed. Please try again")
+
+                }
+
+            }
+        });
+    }
+
+    function LoadTax() {
+        var userId = $("#AppUserId").val();
+        var fiscalYear = $("#FiscalYearId").val();
+        $.ajax({
+            type: "GET",
+            url: "/Salary/Tax/LoadUserTax",
+            data: { userId: userId, fiscalYear: fiscalYear },
+            success: function (res) {
+                $("#taxView").html("");
+                $("#taxView").append(res);
+            }
+        });
+    }
+</script>

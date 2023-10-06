@@ -1,0 +1,85 @@
+﻿@model IEnumerable<LMS_Web.Models.LeaveApplication>
+@{
+    int rowNo = 1;
+    int leaveId = ViewBag.LeaveId;
+}
+
+<style>
+    table.dataTable tfoot th, table.dataTable tfoot td {
+        padding: 8px 10px !important;
+        border-top: 1px solid #323131 !important;
+    }
+</style>
+@if (!Model.Any())
+{
+    <div class="text-center"><h3 class="text-danger">কোন ছুটির তথ্য পাওয়া যায়নি</h3></div>
+    if (leaveId == 3)
+    {
+
+        <p> গড় বেতনেঃ @ViewBag.TotalFullEarnLeaveBalance</p>
+        <p> অর্ধ গড় বেতনেঃ @ViewBag.TotalHalfEarnLeaveBalance</p>
+
+
+    }
+    else if (ViewBag.LeaveBalance != null)
+    {
+        <p class="text-center">অবশিষ্ট ছুটিঃ @ViewBag.LeaveBalance</p>
+    }
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-borderless custrom-table display" id="leaveTypeTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Reason</th>
+                    <th>Total Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(rowNo++)</td>
+                        <td>@item.FromDate.ToString("d")</td>
+                        <td>@item.ToDate.ToString("d")</td>
+                        <td>@item.Reason</td>
+                        <td>@item.TotalDays</td>
+                    </tr>
+
+                }
+
+            </tbody>
+            <tfoot>
+
+                <tr>
+                    <td colspan="3">
+                    </td>
+                    <td class="font-weight-bolder">অবশিষ্ট</td>
+
+                    @if (leaveId == 3)
+                    {
+                        <td class="font-weight-bolder">
+                            গড় বেতনেঃ @ViewBag.TotalFullEarnLeaveBalance
+                            অর্ধ গড় বেতনেঃ @ViewBag.TotalHalfEarnLeaveBalance
+                        </td>
+
+                    }
+                    else if (ViewBag.LeaveBalance != null)
+                    {
+                        <td class="font-weight-bolder">@ViewBag.LeaveBalance</td>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    @*<form asp-action="PrintReport" asp-route-id="@leaveId">
+            <button type="submit" class="btn btn-primary float-right">Print</button>
+        </form>*@
+}
+<script>
+    $("#leaveTypeTable").DataTable();
+</script>

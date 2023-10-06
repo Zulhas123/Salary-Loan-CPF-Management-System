@@ -1,0 +1,62 @@
+﻿@model LMS_Web.ViewModels.CalenderHolidayViewModel
+
+<div id="initialDiv">
+    <div class="d-flex align-content-center mt-4 mb-4 pl-5 pr-3">
+        <h3 class="display-5 mr-auto">@GetMonthName.Info(Model.Month), @Model.Year </h3>
+        <div>
+            <form asp-action="Index" asp-controller="Holidays" method="post" class="">
+                <input id="monthYear" type="month" class="form-control " name="monthYear" onchange="GetHolidays()">
+            </form>
+        </div>
+    </div>
+
+
+    @if (Model != null)
+    {
+        <ul class="calender">
+            @foreach (var item in Model.DayWeekHolidayViewModels)
+            {
+                if (item.Name != null || item.Week=="Fri"||item.Week=="Sat")
+                {
+                    <li>
+                        <div class="date holidays shadow-sm">
+                            <div class="week">
+                              
+                                @item.Week
+                            </div>
+                            <div class="day">
+                                @item.Day
+                            </div>
+                            @if (item.Name != null)
+                            {
+                                <div class="details">
+                                    <span class="leaveDetail">@item.Name</span>
+                                </div>
+                            }
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <div class="date shadow-sm">
+                            <div class="week">
+                                @item.Week
+                            </div>
+                            <div class="day">
+                                @item.Day
+                            </div>
+                            @if (item.Name != null)
+                            {
+                                <div class="details">
+                                    <span class="leaveDetail text-success">@item.Name</span>
+                                </div>
+                            }
+                        </div>
+                    </li>
+                }
+
+            }
+        </ul>
+    }
+</div>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LMS_Web.Areas.CPF.Models.FiscalYearWiseInvestmentInfo>
+
+@{
+    ViewData["Title"] = "Fiscal Year Wise Investment";
+    int row = 1;
+}
+
+<div class="text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+</div>
+<div id="MessageDiv" style="text-align: center;">
+    <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+    <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+</div>
+<a asp-action="AddFiscalYearInvest" class="btn btn-primary mt-3 mb-3"><i class="fas fa-plus-circle"></i> Add Previous Investment </a>
+<div class="table-responsive">
+    <table class="table table-striped table-borderless custrom-table mb-2" id="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User Name</th>
+                <th>Fiscal Year</th>               
+                <th>Investment Amount</th>
+                <th>Interest Amount</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    
+                    <td>@(row++)</td>
+                    <td>@item.AppUser.FullName</td>
+                    <td>@item.FiscalYear.Value</td>
+                    <td>@item.InvestmentAmount</td>
+                    <td>@item.InterestAmount</td>
+                    <td>@item.Total</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#CPF").css("display", "block");
+            $('#table').DataTable();
+            UpdateBtn();
+
+        });
+
+        function UpdateBtn() {
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+
+        };
+
+    </script>
+}

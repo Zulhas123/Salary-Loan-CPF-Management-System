@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CPFLoanReport" targetNamespace="http://tempuri.org/CPFLoanReport.xsd" xmlns:mstns="http://tempuri.org/CPFLoanReport.xsd" xmlns="http://tempuri.org/CPFLoanReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CPFLoanReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="CPFLoanReport" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CPFLoanReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CPFLoanReport" msprop:Generator_RowEvHandlerName="CPFLoanReportRowChangeEventHandler" msprop:Generator_RowDeletedName="CPFLoanReportRowDeleted" msprop:Generator_RowDeletingName="CPFLoanReportRowDeleting" msprop:Generator_RowEvArgName="CPFLoanReportRowChangeEvent" msprop:Generator_TablePropName="_CPFLoanReport" msprop:Generator_RowChangedName="CPFLoanReportRowChanged" msprop:Generator_RowChangingName="CPFLoanReportRowChanging" msprop:Generator_TableClassName="CPFLoanReportDataTable" msprop:Generator_RowClassName="CPFLoanReportRow" msprop:Generator_TableVarName="tableCPFLoanReport" msprop:Generator_UserTableName="CPFLoanReport">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MonthYear" msprop:Generator_ColumnPropNameInRow="MonthYear" msprop:Generator_ColumnPropNameInTable="MonthYearColumn" msprop:Generator_ColumnVarNameInTable="columnMonthYear" msprop:Generator_UserColumnName="MonthYear" type="xs:string" minOccurs="0" />
+              <xs:element name="CPF1" msprop:Generator_ColumnPropNameInRow="CPF1" msprop:Generator_ColumnPropNameInTable="CPF1Column" msprop:Generator_ColumnVarNameInTable="columnCPF1" msprop:Generator_UserColumnName="CPF1" type="xs:string" minOccurs="0" />
+              <xs:element name="CPF2" msprop:Generator_ColumnPropNameInRow="CPF2" msprop:Generator_ColumnPropNameInTable="CPF2Column" msprop:Generator_ColumnVarNameInTable="columnCPF2" msprop:Generator_UserColumnName="CPF2" type="xs:string" minOccurs="0" />
+              <xs:element name="Bike1" msprop:Generator_ColumnPropNameInRow="Bike1" msprop:Generator_ColumnPropNameInTable="Bike1Column" msprop:Generator_ColumnVarNameInTable="columnBike1" msprop:Generator_UserColumnName="Bike1" type="xs:string" minOccurs="0" />
+              <xs:element name="Bike2" msprop:Generator_ColumnPropNameInRow="Bike2" msprop:Generator_ColumnPropNameInTable="Bike2Column" msprop:Generator_ColumnVarNameInTable="columnBike2" msprop:Generator_UserColumnName="Bike2" type="xs:string" minOccurs="0" />
+              <xs:element name="Car1" msprop:Generator_ColumnPropNameInRow="Car1" msprop:Generator_ColumnPropNameInTable="Car1Column" msprop:Generator_ColumnVarNameInTable="columnCar1" msprop:Generator_UserColumnName="Car1" type="xs:string" minOccurs="0" />
+              <xs:element name="Car2" msprop:Generator_ColumnPropNameInRow="Car2" msprop:Generator_ColumnPropNameInTable="Car2Column" msprop:Generator_ColumnVarNameInTable="columnCar2" msprop:Generator_UserColumnName="Car2" type="xs:string" minOccurs="0" />
+              <xs:element name="Hb1" msprop:Generator_ColumnPropNameInRow="Hb1" msprop:Generator_ColumnPropNameInTable="Hb1Column" msprop:Generator_ColumnVarNameInTable="columnHb1" msprop:Generator_UserColumnName="Hb1" type="xs:string" minOccurs="0" />
+              <xs:element name="Hb2" msprop:Generator_ColumnPropNameInRow="Hb2" msprop:Generator_ColumnPropNameInTable="Hb2Column" msprop:Generator_ColumnVarNameInTable="columnHb2" msprop:Generator_UserColumnName="Hb2" type="xs:string" minOccurs="0" />
+              <xs:element name="Hr1" msprop:Generator_ColumnPropNameInRow="Hr1" msprop:Generator_ColumnPropNameInTable="Hr1Column" msprop:Generator_ColumnVarNameInTable="columnHr1" msprop:Generator_UserColumnName="Hr1" type="xs:string" minOccurs="0" />
+              <xs:element name="Hr2" msprop:Generator_ColumnPropNameInRow="Hr2" msprop:Generator_ColumnPropNameInTable="Hr2Column" msprop:Generator_ColumnVarNameInTable="columnHr2" msprop:Generator_UserColumnName="Hr2" type="xs:string" minOccurs="0" />
+              <xs:element name="Hr3" msprop:Generator_ColumnPropNameInRow="Hr3" msprop:Generator_ColumnPropNameInTable="Hr3Column" msprop:Generator_ColumnVarNameInTable="columnHr3" msprop:Generator_UserColumnName="Hr3" type="xs:string" minOccurs="0" />
+              <xs:element name="OtherAdvance" msprop:Generator_ColumnPropNameInRow="OtherAdvance" msprop:Generator_ColumnPropNameInTable="OtherAdvanceColumn" msprop:Generator_ColumnVarNameInTable="columnOtherAdvance" msprop:Generator_UserColumnName="OtherAdvance" type="xs:string" minOccurs="0" />
+              <xs:element name="Others" msprop:Generator_ColumnPropNameInRow="Others" msprop:Generator_ColumnPropNameInTable="OthersColumn" msprop:Generator_ColumnVarNameInTable="columnOthers" msprop:Generator_UserColumnName="Others" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,54 @@
+﻿@model LMS_Web.Areas.Salary.Models.UserHouseRent
+
+@{
+    ViewData["Title"] = "Add";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header border">User Specific House Rent</h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <div class="form-group">
+                <label class="control-label">User Name</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Resident Status Name</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("ResidentStatusId", new SelectList(ViewBag.Residentstatus, "Id", "Name"), "Select Resident Status", new { @class = "form-control", @required = "required" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <span class="text-danger">*</span>
+                <input id="amount" type="number" required="required" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="List">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Deduction").css("display","block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+                $("#AppUserId").prop("disabled", true);
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,29 @@
+﻿@model LMS_Web.Models.LeaveType
+
+@{
+    ViewData["Title"] = "ছুটির ধরণ";
+}
+
+<div class="row mt-5">
+    <div class="col-md-5 div-userinfo m-auto">
+        <form asp-action="Create" method="post">
+            <h4>নতুন ছুটির ধরণ যোগ করুন</h4>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <button type="submit" class="btn btn-primary pl-3 pr-3 mr-4">Add</button>
+
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

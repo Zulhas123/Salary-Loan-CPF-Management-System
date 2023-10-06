@@ -1,0 +1,88 @@
+﻿@model LMS_Web.Models.Section
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-5">
+        <form asp-action="Create" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold">শাখা</h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input required="required" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameBangla" class="control-label"></label>
+                <input asp-for="NameBangla" required="required" class="form-control" />
+                <span asp-validation-for="NameBangla" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <label class="control-label">উইং</label>
+                <select required="required" id="wingId" class="form-control" asp-for="@Model.Department.WingId" asp-items="ViewBag.Wing" onchange="LoadDept()">
+                    <option value="">নির্ধারন করুন</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select  required="required" asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId">
+                    <option value="">নির্ধারন করুন</option>
+                </select>
+            </div>
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="Index">List</a>
+                @if (Model==null||Model.Id == 0)
+                {
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                }else
+
+                {
+                <input type="submit" value="Update" name="btnValue" class="btn btn-primary" />
+                }
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section scripts{    
+    <script>
+         $(document).ready(function () {
+            $("#Settings").css("display", "block");
+            LoadDept();
+        });
+        function LoadDept() {
+            var wingId = $("#wingId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Sections/GetDepartments",
+                data: { wingId: wingId },
+                success: function (res) {
+                    $("#DepartmentId").html("");
+                    var content = '';
+                    $.each(res,
+                        function (index, itemData) {
+
+                            content += '<option value=' + itemData.id + '>' + itemData.name + '</option>'
+
+                        })
+                    $("#DepartmentId").append(content);
+                }
+            });
+        }
+    </script>
+
+}
+

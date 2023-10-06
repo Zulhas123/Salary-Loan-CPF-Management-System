@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LMS_Web.Areas.Loan.Models.UserWiseLoan>
+
+@{
+    ViewData["Title"] = "Total Paid Loan List";
+    int row = 1;
+}
+
+<div class="text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+</div>
+<div id="MessageDiv" style="text-align: center;">
+    <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+    <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-borderless custrom-table mb-2" id="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User Name</th>
+                <th>Loan Head</th>
+                <th>Loan Amount</th>
+                <th>No Of Installment</th>
+                <th>Capital Deduction Amount</th>
+                <th>Interest Deduction Amount</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>@(row++)</td>
+                    <td>@item.AppUsers.FullName</td>
+                    <td>@item.LoanHeads.Name</td>
+                    <td>@item.LoanAmount</td>
+                    <td>@item.NoOfInstallment</td>
+                    <td>@item.CapitalDeductionAmount</td>
+                    <td>@item.InterestDeductionAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Loan").css("display", "block");
+            $('#table').DataTable();
+        });
+    </script>
+}

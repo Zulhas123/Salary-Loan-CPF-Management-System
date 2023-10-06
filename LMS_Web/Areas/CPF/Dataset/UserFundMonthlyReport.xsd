@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="UserFundMonthlyReport" targetNamespace="http://tempuri.org/UserFundMonthlyReport.xsd" xmlns:mstns="http://tempuri.org/UserFundMonthlyReport.xsd" xmlns="http://tempuri.org/UserFundMonthlyReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="UserFundMonthlyReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="UserFundMonthlyReport" msprop:Generator_DataSetName="UserFundMonthlyReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="UserFundMonthlyReport" msprop:Generator_RowEvHandlerName="UserFundMonthlyReportRowChangeEventHandler" msprop:Generator_RowDeletedName="UserFundMonthlyReportRowDeleted" msprop:Generator_RowDeletingName="UserFundMonthlyReportRowDeleting" msprop:Generator_RowEvArgName="UserFundMonthlyReportRowChangeEvent" msprop:Generator_TablePropName="_UserFundMonthlyReport" msprop:Generator_RowChangedName="UserFundMonthlyReportRowChanged" msprop:Generator_RowChangingName="UserFundMonthlyReportRowChanging" msprop:Generator_TableClassName="UserFundMonthlyReportDataTable" msprop:Generator_RowClassName="UserFundMonthlyReportRow" msprop:Generator_TableVarName="tableUserFundMonthlyReport" msprop:Generator_UserTableName="UserFundMonthlyReport">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="GroupInsurance" msprop:Generator_ColumnPropNameInRow="GroupInsurance" msprop:Generator_ColumnPropNameInTable="GroupInsuranceColumn" msprop:Generator_ColumnVarNameInTable="columnGroupInsurance" msprop:Generator_UserColumnName="GroupInsurance" type="xs:string" minOccurs="0" />
+              <xs:element name="WelfareFund" msprop:Generator_ColumnPropNameInRow="WelfareFund" msprop:Generator_ColumnPropNameInTable="WelfareFundColumn" msprop:Generator_ColumnVarNameInTable="columnWelfareFund" msprop:Generator_UserColumnName="WelfareFund" type="xs:string" minOccurs="0" />
+              <xs:element name="Rehabilitation" msprop:Generator_ColumnPropNameInRow="Rehabilitation" msprop:Generator_ColumnPropNameInTable="RehabilitationColumn" msprop:Generator_ColumnVarNameInTable="columnRehabilitation" msprop:Generator_UserColumnName="Rehabilitation" type="xs:string" minOccurs="0" />
+              <xs:element name="MonthName" msprop:Generator_ColumnPropNameInRow="MonthName" msprop:Generator_ColumnPropNameInTable="MonthNameColumn" msprop:Generator_ColumnVarNameInTable="columnMonthName" msprop:Generator_UserColumnName="MonthName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

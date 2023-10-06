@@ -1,0 +1,142 @@
+﻿@model IEnumerable<LMS_Web.Areas.Salary.Models.UserDeduction>
+
+@{
+    ViewData["Title"] = "User Specific Deduction List";
+    int row = 1;
+}
+
+<div class="bg-light mt-4 p-3">
+    <div class="text-center">
+        <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+    </div>
+    <div id="MessageDiv" style="text-align: center;">
+        <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+        <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">From Month</label>
+                <select id="fromMonth" name="fromMonth" class="form-control" tabindex="10" id="fMonth">
+                    <option value="">Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">From Year</label>
+                <select id="fromYear" name="fromYear" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">To Month</label>
+                <select id="toMonth" name="toMonth" class="form-control" tabindex="10" id="tMonth">
+                    <option value="">Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">To Year</label>
+                <select id="toYear" namer="toYear" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-4 text-center">
+        <button type="button" class="btn btn-primary" onclick="GetData()">Search</button>
+        <button type="button" class="btn btn-primary" onclick="ShowSameInEveryMonth()">Same in every month</button>
+    </div>
+</div>
+<div style="overflow: auto" id="userDeductionListView"></div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Deduction").css("display", "block");
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            $("#fMonth").val(month);
+            $("#tMonth").val(month);
+
+            var currentYear = year + 10;
+            var fromYear = document.getElementById("fromYear");
+            var toYear = document.getElementById("toYear");
+            for (var i = 2020; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                if (i == year) {
+                    option.setAttribute("selected", year);
+                }
+                fromYear.appendChild(option);
+            }
+            for (var i = 2020; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                if (i == year) {
+                    option.setAttribute("selected", year);
+                }
+                toYear.appendChild(option);
+            }
+            var date = new Date();
+            var fYear = date.getFullYear();
+            var fMonth = date.getMonth()+1;
+            loadData(fYear, fMonth, fYear, fMonth);
+
+        });
+
+        function GetData() {
+            var fYear = $("#fromYear").val();
+            var fMonth = $("#fromMonth").val();
+            var tYear = $("#toYear").val();
+            var tMonth = $("#toMonth").val();
+            loadData(fYear, fMonth, tYear, tMonth);
+        }
+
+        function loadData(fromYear, fromMonth, toYear, toMonth) {
+            $.ajax({
+                type: "GET",
+                url: "/Salary/Deduction/LoadList",
+                data: { fromYear: fromYear, fromMonth: fromMonth, toYear: toYear, toMonth: toMonth },
+                success: function (res) {
+                    $("#userDeductionListView").html("");
+                    $("#userDeductionListView").append(res);
+
+                }
+            });
+        }
+        function ShowSameInEveryMonth() {
+            $.ajax({
+                type: "GET",
+                url: "/Salary/Deduction/LoadSameInEveryMonthList",               
+                success: function (res) {
+                    $("#userDeductionListView").html("");
+                    $("#userDeductionListView").append(res);
+
+                }
+            });
+        }
+     </script>
+  }

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LMS_Web.ViewModels.LeaveBalanceVm>
+@{
+    ViewData["Title"] = "_LoadBalance";
+    Layout = null;
+    int row = 1;
+}
+@if (ViewBag.Message != "")
+{
+    <h2 class="text-center"> @ViewBag.Message</h2>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-borderless custrom-table display" id="leaveBalance">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ছুটির ধরন</th>
+                    <th>উপভোগ করেছেন</th>
+                    <th>অবশিষ্ট</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.Type == "অর্ধ গড়")
+                    {
+                        <tr>
+                            <td>@(row++)</td>
+                            <td>@item.Type</td>
+                            <td>@item.Obtain</td>
+                            <td>@item.Balance (গড় @Math.Round((decimal)item.Balance / 2)) </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>@(row++)</td>
+                            <td>@item.Type</td>
+                            <td>@item.Obtain</td>
+                            <td>@item.Balance</td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+            @if (ViewBag.TotalEarnLeave != null)
+            {
+                <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>@ViewBag.TotalEarnLeave</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            }
+        </table>
+    </div>
+
+}
+<script>
+    $("#leaveBalance").DataTable();
+</script>

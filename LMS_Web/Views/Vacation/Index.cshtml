@@ -1,0 +1,57 @@
+﻿@model LMS_Web.ViewModels.LeaveCalenderViewModel
+
+@{
+    ViewData["Title"] = "Calender";
+}
+
+
+<h2 class="text-center">Calender</h2>
+
+
+<div id="partialLeaveForm">
+    @await Html.PartialAsync("_AddLeave", model: Model.Vacation)
+</div>
+
+
+<ul class="calender">
+    @foreach (var item in Model.DayWeekViewModels)
+    {
+        <li>
+            <div class="date" onclick="openLeaveForm(@item.Day)">
+                <div class="week">
+                    @item.Week
+                </div>
+                <div class="day">
+                    @item.Day
+                </div>
+            </div>
+            @*<div class="details">
+                    <span class="leaveType">ABCD</span>
+                    <span class="leaveDetail">kmc amb bbcc sjfldf</span>
+                </div>*@
+        </li>
+    }
+</ul>
+
+<ul class="leave">
+    <li>
+        <div class="details">
+            <span class="leaveDate">ABCD</span>
+            <span class="leaveType">ABCD</span>
+            <span class="leaveDetail">kmc amb bbcc sjfldf</span>
+        </div>
+    </li>
+</ul>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#partialLeaveForm").hide();
+        });
+
+        function openLeaveForm(day) {
+            $("#partialLeaveForm").show();
+        };
+    </script>
+}

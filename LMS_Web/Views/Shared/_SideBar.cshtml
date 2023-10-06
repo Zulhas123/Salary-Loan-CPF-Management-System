@@ -1,0 +1,24 @@
+﻿<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+       @* @if (User.IsInRole("User"))
+        {
+            <partial name="_UserMenus" />
+        }
+
+        @if (User.IsInRole("Admin"))
+        {
+            <partial name="_AdminMenus" />
+        }
+
+        @if (User.IsInRole("Super Admin"))
+        {
+            <partial name="_SuperAdminMenus" />
+        }*@
+    
+        @await Component.InvokeAsync("DynamicMenu")
+
+    <div class="sb-sidenav-footer text-white font-weight-bold">
+         <br /> বিজেআরআই
+    </div>
+    </nav>
+</div>

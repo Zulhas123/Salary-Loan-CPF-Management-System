@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - CPF</title>
+
+    <link href="~/css/notosansbengali.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/datatable.min.css" rel="stylesheet" />
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <link href="/css/select2.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <partial name="_Navbar" />
+    <div id="layoutSidenav">
+        <partial name="_SideBar" />
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+            <partial name="_Footer" />
+        </div>
+    </div>
+    <script src="@Url.Content("~/js/all.min.js")" crossorigin="anonymous"></script>
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
+    <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/js/sidebar.js")"></script>
+    <script src="@Url.Content("~/js/jquery-ui.js")"></script>
+    <script src="@Url.Content("~/js/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+    <script src="@Url.Content("~/js/select2.min.js")"></script>
+    <script>
+        $(function () {
+            $(".date").datepicker({
+                //dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+100"
+            });
+        });
+
+    </script>
+    @await RenderSectionAsync("scripts", required: false)
+</body>
+</html>

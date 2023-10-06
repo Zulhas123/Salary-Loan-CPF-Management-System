@@ -1,0 +1,520 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-LMS_Web-D58B2F45-10BA-4EE4-8E31-EDAE2956FE3C</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\VMS\**" />
+    <Compile Remove="Migrations1\**" />
+    <Compile Remove="Views\EmployeeLeaves\**" />
+    <Compile Remove="Views\VacationTypes\**" />
+    <Compile Remove="Views\Vacation\**" />
+    <Content Remove="Areas\VMS\**" />
+    <Content Remove="Migrations1\**" />
+    <Content Remove="Views\EmployeeLeaves\**" />
+    <Content Remove="Views\VacationTypes\**" />
+    <Content Remove="Views\Vacation\**" />
+    <EmbeddedResource Remove="Areas\VMS\**" />
+    <EmbeddedResource Remove="Migrations1\**" />
+    <EmbeddedResource Remove="Views\EmployeeLeaves\**" />
+    <EmbeddedResource Remove="Views\VacationTypes\**" />
+    <EmbeddedResource Remove="Views\Vacation\**" />
+    <None Remove="Areas\VMS\**" />
+    <None Remove="Migrations1\**" />
+    <None Remove="Views\EmployeeLeaves\**" />
+    <None Remove="Views\VacationTypes\**" />
+    <None Remove="Views\Vacation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\EmployeeLeavesController.cs" />
+    <Compile Remove="Controllers\VacationController.cs" />
+    <Compile Remove="Controllers\VacationTypesController.cs" />
+    <Compile Remove="Migrations\20230530062959_LoanPaymentHistory.cs" />
+    <Compile Remove="Migrations\20230530062959_LoanPaymentHistory.Designer.cs" />
+    <Compile Remove="Migrations\20230530063424_LoanPaymentHistory.cs" />
+    <Compile Remove="Migrations\20230530063424_LoanPaymentHistory.Designer.cs" />
+    <Compile Remove="Migrations\20230723050318_HistoryCreated.cs" />
+    <Compile Remove="Migrations\20230723050318_HistoryCreated.Designer.cs" />
+    <Compile Remove="Models\EmployeeLeave.cs" />
+    <Compile Remove="Models\Leave.cs" />
+    <Compile Remove="ViewModels\DayWeekViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\Error.cshtml" />
+    <Content Remove="wwwroot\Reports\BankBonusReport.rdlc" />
+    <Content Remove="wwwroot\Reports\BankReport.rdlc" />
+    <Content Remove="wwwroot\Reports\BonusRpt.rdlc" />
+    <Content Remove="wwwroot\Reports\CpfDeduction.rdlc" />
+    <Content Remove="wwwroot\Reports\CPFNonRefundableReport.rdlc" />
+    <Content Remove="wwwroot\Reports\CpfReport.rdlc" />
+    <Content Remove="wwwroot\Reports\CpfStatement.rdlc" />
+    <Content Remove="wwwroot\Reports\FullEarnLeaveReport.rdlc" />
+    <Content Remove="wwwroot\Reports\FullReport.rdlc" />
+    <Content Remove="wwwroot\Reports\FundReport.rdlc" />
+    <Content Remove="wwwroot\Reports\Investment.rdlc" />
+    <Content Remove="wwwroot\Reports\InvestmentMainRpt.rdlc" />
+    <Content Remove="wwwroot\Reports\LeaveApplication.rdlc" />
+    <Content Remove="wwwroot\Reports\LoanReport.rdlc" />
+    <Content Remove="wwwroot\Reports\MonthWiseReport.rdlc" />
+    <Content Remove="wwwroot\Reports\PRLInvestment.rdlc" />
+    <Content Remove="wwwroot\Reports\ShortBill.rdlc" />
+    <Content Remove="wwwroot\Reports\TestMainRpt.rdlc" />
+    <Content Remove="wwwroot\Reports\TestOthersRpt.rdlc" />
+    <Content Remove="wwwroot\Reports\TestRpt.rdlc" />
+    <Content Remove="wwwroot\Reports\UserFiscalCpf.rdlc" />
+    <Content Remove="wwwroot\Reports\UserFundMonthly.rdlc" />
+    <Content Remove="wwwroot\Reports\UserWiseLoan.rdlc" />
+    <Content Remove="wwwroot\Reports\UtilityRpt.rdlc" />
+    <Content Remove="wwwroot\Reports\YearlyInvestStatement.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Salary\Report\SalaryRpt.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Reports\BankBonusReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\BankReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\BonusRpt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\CpfDeduction.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\CPFNonRefundableReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\CpfStatement.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\FundReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\CpfReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\Investment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\InvestmentMainRpt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\LoanReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\MonthWiseReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\PRLInvestment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\SalaryRpt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\FullEarnLeaveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\FullReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\LeaveApplication.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\ShortBill.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\UserFiscalCpf.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\UserFundMonthly.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\UserWiseLoan.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\UtilityRpt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\Reports\YearlyInvestStatement.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.11" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="3.11.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Net.Compilers" Version="3.11.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.ReportViewer.Common" Version="10.0.40219.1" />
+    <PackageReference Include="Microsoft.ReportViewer.Runtime.Common" Version="12.0.2402.15" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="Quartz" Version="3.2.3" />
+    <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.13" />
+    <PackageReference Include="System.CodeDom" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\CPF\Data\" />
+    <Folder Include="Areas\Loan\Data\" />
+    <Folder Include="Areas\Salary\Data\" />
+    <Folder Include="Areas\Salary\Report\" />
+    <Folder Include="Areas\Salary\Utility\" />
+    <Folder Include="Areas\Salary\Views\UserDeduction\" />
+    <Folder Include="Areas\Settings\Data\" />
+    <Folder Include="Pages\" />
+    <Folder Include="wwwroot\file\" />
+    <Folder Include="wwwroot\loanfile\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Settings\Views\Shared\Components\DynamicMenuListSettings\Default.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Areas\CPF\Dataset\CpfStatement.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CpfStatement.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\DsCpfDeduction.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DsCpfDeduction.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\dsCpfReport.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>dsCpfReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\DsInvestment.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DsInvestment.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\DsShortBill.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DsShortBill.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\DsUserFiscalCpf.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DsUserFiscalCpf.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\InvestDes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InvestDes.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\PRLInvestment.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PRLInvestment.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\TestDs.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestDs.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\UserFund.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserFund.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\UserFundMonthlyReport.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserFundMonthlyReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\CPF\Dataset\YearlyInvestStatement.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>YearlyInvestStatement.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Loan\DataSet\CPFNonRefundableReportDs.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CPFNonRefundableReportDs.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Loan\DataSet\MonthWiseReportDs.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MonthWiseReportDs.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Loan\DataSet\OthersLoan.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OthersLoan.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Loan\DataSet\UserWiseLoan.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserWiseLoan.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Salary\Dataset\BankBonus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BankBonus.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Salary\Dataset\Bonus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Bonus.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Salary\Dataset\IncomeTax.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IncomeTax.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Salary\Dataset\SalaryRpt.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SalaryRpt.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Salary\Dataset\SummarySalary.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SummarySalary.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="Areas\Salary\Dataset\Utility.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Utility.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="DataSet\EarnLeaveType.Designer.cs">
+      <DependentUpon>EarnLeaveType.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="DataSet\FullReport - Copy.Designer.cs">
+      <DependentUpon>FullReport.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="DataSet\LeaveApplication.Designer.cs">
+      <DependentUpon>LeaveApplication.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="DataSet\leaveList.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>leaveList.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Salary\Views\Shared\Components\Navbar\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\CPFLoanReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\EarnLeaveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\IncomeTaxRpt.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\LeaveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\OthersLoanRpt.rdlc">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\SelfCpfReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Reports\SummarySalary.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Areas\CPF\Dataset\CpfStatement.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>CpfStatement.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\DsCpfDeduction.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>DsCpfDeduction.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\dsCpfReport.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>dsCpfReport.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\DsInvestment.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>DsInvestment.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\DsShortBill.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>DsShortBill.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\DsUserFiscalCpf.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>DsUserFiscalCpf.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\InvestDes.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>InvestDes.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\PRLInvestment.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>PRLInvestment.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\TestDs.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>TestDs.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\UserFund.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>UserFund.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\UserFundMonthlyReport.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>UserFundMonthlyReport.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\CPF\Dataset\YearlyInvestStatement.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>YearlyInvestStatement.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Loan\DataSet\CPFNonRefundableReportDs.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>CPFNonRefundableReportDs.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Loan\DataSet\MonthWiseReportDs.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>MonthWiseReportDs.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Loan\DataSet\OthersLoan.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OthersLoan.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Areas\Loan\DataSet\UserWiseLoan.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>UserWiseLoan.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Salary\Dataset\BankBonus.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>BankBonus.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Salary\Dataset\Bonus.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Bonus.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Salary\Dataset\IncomeTax.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>IncomeTax.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Areas\Salary\Dataset\SalaryRpt.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>SalaryRpt.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Salary\Dataset\SummarySalary.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>SummarySalary.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="Areas\Salary\Dataset\Utility.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Utility.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="DataSet\EarnLeaveType.xsc">
+      <DependentUpon>EarnLeaveType.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\EarnLeaveType.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>EarnLeaveType.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="DataSet\EarnLeaveType.xss">
+      <DependentUpon>EarnLeaveType.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\FullReport - Copy.xsc">
+      <DependentUpon>FullReport.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\FullReport - Copy.xss">
+      <DependentUpon>FullReport.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\FullReport.xsc">
+      <DependentUpon>FullReport.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\FullReport.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>FullEarnLEaveReport.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="DataSet\FullReport.xss">
+      <DependentUpon>FullReport.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\LeaveApplication.xsc">
+      <DependentUpon>LeaveApplication.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\LeaveApplication.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>LeaveApplication.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="DataSet\LeaveApplication.xss">
+      <DependentUpon>LeaveApplication.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\leaveList.xsc">
+      <DependentUpon>leaveList.xsd</DependentUpon>
+    </None>
+    <None Update="DataSet\leaveList.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>leaveList.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </None>
+    <None Update="DataSet\leaveList.xss">
+      <DependentUpon>leaveList.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,50 @@
+﻿<div class="sb-sidenav-menu">
+    <div class="nav">
+        @*<div class="sb-sidenav-menu-heading">Core</div>*@
+        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="Home">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            ড্যাশবোর্ড
+        </a>
+        <a class="nav-link" asp-area="" asp-action="UserDashboard" asp-controller="Home">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            ব্যক্তিগত ড্যাশবোর্ড
+        </a>
+        @*if*@
+        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="Holidays">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            বাৎসরিক ছুটি সমূহ
+        </a>
+        <a class="nav-link" asp-area="" asp-action="Create" asp-controller="Holidays">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            বাৎসরিক ছুটি বরাদ্দকরণ
+        </a>
+        <a class="nav-link" asp-area="" asp-action="SaveUserApplication" asp-controller="Leaves">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            ছুটির আবেদন
+        </a>
+        <a class="nav-link" asp-area="" asp-action="UserApplicationList" asp-controller="Leaves">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            ছুটি আবেদন তালিকা
+        </a>
+        <a class="nav-link" asp-area="" asp-action="UserApplicationList" asp-controller="Leaves">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            ছুটির আবেদনসমূহ (ব্যক্তিগত)
+        </a>
+        <a class="nav-link" asp-area="" asp-action="Balance" asp-controller="Leaves">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            অবশিষ্ট ছুটি
+        </a>
+        <a class="nav-link" asp-area="" asp-action="History" asp-controller="History">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            পূর্বের ছূটি অনুমোদনের হিস্টোরি
+        </a>
+        <a class="nav-link" asp-area="" asp-action="UserLeaveHistory" asp-controller="Home">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            পূর্ণ ছুটির বিবরন
+        </a>
+        <a class="nav-link" asp-area="" asp-action="CalculateLeave" asp-controller="Leaves">
+            <div class="sb-nav-link-icon"><i class="far fa-envelope"></i></div>
+            ছুটি হিসাব করুন
+        </a>
+    </div>
+</div>

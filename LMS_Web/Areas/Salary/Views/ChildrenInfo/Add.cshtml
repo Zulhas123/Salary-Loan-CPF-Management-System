@@ -1,0 +1,114 @@
+﻿@model LMS_Web.Areas.Settings.Models.ChildrenInfo
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Salary/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.AntiForgeryToken()
+
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header border">Children Information Setup</h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+           @* <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.SuccessMessage</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.ErrorMessage</span></label>
+            </div>*@
+            <div class="form-group">
+                <label class="control-label">User Name</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required", @onchange="LoadUserChildren()" })
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Children Name</label>
+                <span class="text-danger">*</span>
+                <input required="required" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Children Date Of Birth</label>
+                <span class="text-danger">*</span>
+                <input required="required" asp-for="DateOfBirth" type="text" class="date form-control" />
+                @*<input type="date" placeholder="dd/mm/yyyy" autocomplete="off" asp-for="DateOfBirth" required="required" class="form-control" />*@
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>            
+             <div class="form-group">
+                <input type="checkbox" id="isFixed" asp-for="IsApprove" onchange="AprroveDateShow()">
+                <label asp-for="IsApprove" class="control-label"></label>
+            </div>
+            <div class="form-group" id="memorandumField" style="display:none">
+                <label class="control-label">Memorandum No</label>
+                <span class="text-danger">*</span>
+                <input asp-for="MemorandumNo" type="text" class="form-control" id="approveMemorandumRequired" />
+                <span asp-validation-for="MemorandumNo" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="approveDateField" style="display:none">
+                <label class="control-label">Approve Date</label>
+                <input asp-for="ApproveDate" type="text" class="date form-control" id="approveDateRequired" />               
+                <span asp-validation-for="ApproveDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="List">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+            
+        </form>
+    </div>
+</div>
+<div style="overflow: auto" id="userChildrenView"></div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            AprroveDateShow();
+            $("#ChildrenInfo").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+
+        });
+
+        function LoadUserChildren() {
+            var userId = $("#AppUserId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Salary/ChildrenInfo/LoadUserChildreninfo",
+                data: { userId: userId},
+                success: function (res) {
+                    $("#userChildrenView").html("");
+                    $("#userChildrenView").append(res);
+
+                }
+            });
+        }
+
+
+        function AprroveDateShow() {
+            var checkBox = document.getElementById("isFixed");
+            var approveDateField = document.getElementById("approveDateField");
+            var memorandumField = document.getElementById("memorandumField");
+            var approveDateRequired = document.getElementById("approveDateRequired");
+            var approveMemorandumRequired = document.getElementById("approveMemorandumRequired");
+            if (checkBox.checked == true) {
+                approveDateField.style.display = "block";
+                approveDateRequired.setAttribute('required', '');
+                memorandumField.style.display = "block";
+                approveMemorandumRequired.setAttribute('required', '');
+            } else {
+                approveDateField.style.display = "none";
+                approveDateRequired.removeAttribute('required');
+                memorandumField.style.display = "none";
+                approveMemorandumRequired.removeAttribute('required');
+            }
+        }
+    </script>
+}

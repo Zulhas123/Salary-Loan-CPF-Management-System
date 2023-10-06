@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="InvestDes" targetNamespace="http://tempuri.org/InvestDes.xsd" xmlns:mstns="http://tempuri.org/InvestDes.xsd" xmlns="http://tempuri.org/InvestDes.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="InvestDes" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="InvestDes" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="InvestDes">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="InvestDes" msprop:Generator_RowClassName="InvestDesRow" msprop:Generator_RowEvHandlerName="InvestDesRowChangeEventHandler" msprop:Generator_RowDeletedName="InvestDesRowDeleted" msprop:Generator_RowDeletingName="InvestDesRowDeleting" msprop:Generator_RowEvArgName="InvestDesRowChangeEvent" msprop:Generator_TablePropName="_InvestDes" msprop:Generator_RowChangedName="InvestDesRowChanged" msprop:Generator_UserTableName="InvestDes" msprop:Generator_RowChangingName="InvestDesRowChanging" msprop:Generator_TableClassName="InvestDesDataTable" msprop:Generator_TableVarName="tableInvestDes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Description" msprop:Generator_UserColumnName="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="InvestAmount" msprop:Generator_UserColumnName="InvestAmount" msprop:Generator_ColumnPropNameInTable="InvestAmountColumn" msprop:Generator_ColumnPropNameInRow="InvestAmount" msprop:Generator_ColumnVarNameInTable="columnInvestAmount" type="xs:string" minOccurs="0" />
+              <xs:element name="InterstAmount" msprop:Generator_UserColumnName="InterstAmount" msprop:Generator_ColumnPropNameInTable="InterstAmountColumn" msprop:Generator_ColumnPropNameInRow="InterstAmount" msprop:Generator_ColumnVarNameInTable="columnInterstAmount" type="xs:string" minOccurs="0" />
+              <xs:element name="Total" msprop:Generator_UserColumnName="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" type="xs:string" minOccurs="0" />
+              <xs:element name="AppUserId" msprop:Generator_ColumnPropNameInRow="AppUserId" msprop:Generator_ColumnPropNameInTable="AppUserIdColumn" msprop:Generator_ColumnVarNameInTable="columnAppUserId" msprop:Generator_UserColumnName="AppUserId" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

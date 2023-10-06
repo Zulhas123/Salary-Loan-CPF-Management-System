@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LMS_Web.Models.UserLeaveQuota>
+
+@{
+    ViewData["Title"] = "কর্মী ছুটি বিবরণ";
+}
+
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div class="text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+</div>
+
+<table class="table table-striped table-borderless custrom-table mb-2" id="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee.EmployeeCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveType.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.EmployeeCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.22/i18n/Bangla.json"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+}

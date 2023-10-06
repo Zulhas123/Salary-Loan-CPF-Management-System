@@ -1,0 +1,52 @@
+﻿@model LMS_Web.Areas.Loan.Models.UserWiseLoan;
+@{
+    ViewData["Title"] = "Add";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+
+            <div class="row justify-content-between">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold" >User Wise Paid Loan Information</label>
+                        @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value","Text"), "Select User", new { @class = "form-control", @required = "required", @onchange="LoadPaymentHistory()" })
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+<div id="details"></div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Loan").css("display", "block");
+            $(function () {
+                $("#AppUserId").select2();
+            });
+        });
+        function LoadPaymentHistory() {
+            var userId = $("#AppUserId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Loan/UserWiseLoan/LoadPaymentHistory",
+                data: { userId: userId },
+                success: function (res) {
+                    $("#details").html("");
+                    if (res) {
+                        $("#details").append(res);
+                    }
+                }
+
+            });
+        }
+
+    </script>
+}

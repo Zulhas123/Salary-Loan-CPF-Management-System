@@ -1,0 +1,91 @@
+﻿@model IEnumerable<LMS_Web.Models.LeaveApplication>
+
+<style>
+    .form-row label {
+        margin-bottom: 0;
+    }
+
+    table.dataTable tfoot th, table.dataTable tfoot td {
+        padding: 8px 10px !important;
+        border-top: 1px solid #323131 !important;
+    }
+</style>
+
+@{
+    var userId = ViewBag.UserId;
+    var leaveId = ViewBag.LeaveId;
+    int rowNo = 1;
+}
+@if (ViewBag.Message == "")
+{
+}
+else if (ViewBag.Message == null)
+{
+
+    <div class="alert alert-success text-center mt-2">কোন তথ্য পাওয়া যায় নাই</div>
+
+
+}
+else
+{
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-borderless custrom-table display" id="historyTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>শুরুর দিন</th>
+                    <th>শেষ দিন</th>
+                    <th>ছুটির ধরণ</th>
+                    <th>কারণ</th>
+                    <th>মোট দিন</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.LeaveTypeId == 3 && item.EarnLeaveType == 1)
+                    {
+                        <tr>
+                            <td>@(rowNo++)</td>
+                            <td>@item.FromDate.ToString("d")</td>
+                            <td>@item.ToDate.ToString("d")</td>
+                            <td>@item.LeaveType.Name (গড়)</td>
+                            <td>@item.Reason</td>
+                            <td>@item.TotalDays</td>
+                        </tr>
+                    }
+                    if (item.LeaveTypeId == 3 && item.EarnLeaveType == 2)
+                    {
+                        <tr>
+                            <td>@(rowNo++)</td>
+                            <td>@item.FromDate.ToString("d")</td>
+                            <td>@item.ToDate.ToString("d")</td>
+                            <td>@item.LeaveType.Name (অর্ধ গড়)</td>
+                            <td>@item.Reason</td>
+                            <td>@item.TotalDays</td>
+                        </tr>
+                    }
+                    if (item.LeaveTypeId != 3)
+                    {
+                        <tr>
+                            <td>@(rowNo++)</td>
+                            <td>@item.FromDate.ToString("d")</td>
+                            <td>@item.ToDate.ToString("d")</td>
+                            <td>@item.LeaveType.Name</td>
+                            <td>@item.Reason</td>
+                            <td>@item.TotalDays</td>
+                        </tr>
+                    }
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+    <a class="btn btn-success mt-4" asp-action="PrintFullReport" asp-route-userId="@userId" asp-route-leaveId="@leaveId" asp-controller="Home"> Print</a>
+
+}
+<script>
+    $("#historyTable").DataTable();
+</script>

@@ -1,0 +1,76 @@
+﻿@model LMS_Web.Models.EmployeeLeave
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>EmployeeLeave</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.AppUserId"></select>
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveTypeId" class="control-label"></label>
+                <input asp-for="LeaveTypeId" class="form-control" />
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalLeave" class="control-label"></label>
+                <input asp-for="TotalLeave" class="form-control" />
+                <span asp-validation-for="TotalLeave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveTaken" class="control-label"></label>
+                <input asp-for="LeaveTaken" class="form-control" />
+                <span asp-validation-for="LeaveTaken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveBalance" class="control-label"></label>
+                <input asp-for="LeaveBalance" class="form-control" />
+                <span asp-validation-for="LeaveBalance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedBy" class="control-label"></label>
+                <input asp-for="CreatedBy" class="form-control" />
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDateTime" class="control-label"></label>
+                <input asp-for="CreatedDateTime" class="form-control" />
+                <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedBy" class="control-label"></label>
+                <input asp-for="UpdatedBy" class="form-control" />
+                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedDateTime" class="control-label"></label>
+                <input asp-for="UpdatedDateTime" class="form-control" />
+                <span asp-validation-for="UpdatedDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

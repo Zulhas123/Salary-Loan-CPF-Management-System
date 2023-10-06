@@ -1,0 +1,60 @@
+﻿@model LMS_Web.Areas.Settings.Models.GradeWiseFixedDeduction
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Salary/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 font-weight-bold card-header border">Grade Wise Fixed Deduction Setup</h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+           @* <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.SuccessMessage</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.ErrorMessage</span></label>
+            </div>*@
+            <div class="form-group">
+                <label class="control-label">Deduction Name</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("DeductionId", new SelectList(ViewBag.Deduction, "Id", "Name"), "Select Deduction", new { @class = "form-control", @required = "required", @onchange="LoadStation()" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">From Grade</label>
+                @Html.DropDownList("FromGradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select Grade", new { @class = "form-control", @required = "required", @onchange="LoadStation()" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">To Grade</label>
+                @Html.DropDownList("ToGradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select Grade", new { @class = "form-control", @required = "required", @onchange="LoadStation()" })
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Amount</label>
+                <span class="text-danger">*</span>
+                <input required="required" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="List">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+            
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Deduction").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+
+        });
+
+    </script>
+}
+

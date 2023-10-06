@@ -1,0 +1,81 @@
+﻿@model LMS_Web.Areas.Salary.Models.GradeWisePayScale
+@{
+    ViewData["Title"] = "Create";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-5">
+        <form method="post" asp-action="Add" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header border">Grade Wise Allowance</h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Grade</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("GradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select Grade", new { @class = "form-control", @required = "required" })
+
+            </div>
+            <div class="form-group">
+                <label class="control-label">Allowance</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("PayScaleId", new SelectList(ViewBag.PayScale, "Id", "Name"), "Select Allowance", new { @class = "form-control", @required = "required" })
+
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="isFixed" asp-for="IsFixed" onclick="CheckInfo()">
+                <label asp-for="IsFixed" class="control-label"></label>
+            </div>
+            <div class="form-group" id="amountDiv">
+                <label asp-for="FixedAmount" class="control-label"></label>
+                <span class="text-danger">*</span>
+                <input id="amount" type="number" asp-for="FixedAmount" class="form-control" />
+                <span asp-validation-for="FixedAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="percentageDiv">
+                <label asp-for="Percentage" class="control-label"></label>
+                <span class="text-danger">*</span>
+                <input type="number" id="percentage" asp-for="Percentage" class="form-control" />
+                <span asp-validation-for="Percentage" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="List">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+
+        $(document).ready(function () {
+            $("#Allowance").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+            CheckInfo();
+        });
+        function CheckInfo() {            
+            if ($("#isFixed").is(':checked')) {
+                $("#percentageDiv").hide();
+                $("#amountDiv").show();
+                $("#percentage").val("");
+            }
+            else {
+                $("#amountDiv").hide();
+                $("#percentageDiv").show();// checked
+                $("#amount").val('');  // checked
+
+            }
+        }
+
+    </script>
+
+}

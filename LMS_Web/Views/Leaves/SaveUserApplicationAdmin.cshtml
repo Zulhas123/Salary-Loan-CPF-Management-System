@@ -1,0 +1,289 @@
+﻿@model LMS_Web.Models.LeaveApplication
+
+@{
+    ViewData["Title"] = "ছুটির আবেদন";
+}
+
+<div class="row justify-content-center mt-4 mb-4">
+    <div class="col-md-10">
+
+        <form id="submitFrm" asp-action="SaveUserApplicationAdmin" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+
+            <div class="text-center mt-2 mb-4">
+                <h1 class="h5 mb-3 font-weight-bold">ছুটির আবেদন (এডমিন)</h1>
+            </div>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-info">@ViewBag.Message</div>
+            }
+            <div class="row">
+                <div class="col-6">
+                    <input type="hidden" value="0" id="fileId" />
+                   <div class="form-group">
+                        <label class="control-label">কর্মকর্তার কোড</label>
+                        &nbsp;<span class="text-danger">*</span>
+                        <input class="form-control" name="empCode" type="text"/>
+                      <span id="errorLeaveType" class="text-danger"></span>
+                    </div>
+                    
+          
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="LeaveTypeId" class="control-label"></label>
+                        &nbsp;<span class="text-danger">*</span>
+                        <select asp-for="LeaveTypeId" class="form-control" asp-items="ViewBag.VacationTypeId">
+                            <option value="">ছুটির ধরণ</option>
+                        </select>
+
+                        <span id="errorLeaveType" class="text-danger" asp-validation-for="LeaveTypeId"></span>
+                    </div>
+                    <div class="form-group" id="earnLeaveTypeDiv">
+                        <label class="control-label">অর্জিত ছুটির ধরণ</label>
+                        <select asp-for="EarnLeaveType" class="form-control" asp-items="ViewBag.EarnLeaveType">
+                        </select>
+                    </div>
+                    <div class="form-group" id="chkbxId">
+                        <input type="checkbox" id="convertToFull" name="convertToFull" value="ConvertedToFull">
+                        <label>গড় বেতনে রুপান্তর করুন</label><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+
+                    <div class="form-group">
+                        <label asp-for="FromDate" class="control-label"></label>
+                        <input name="FromDate" id="fromDate" autocomplete="off" placeholder="dd/mm/yyyy" class="form-control date" />
+                        <span id="errorFromDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Reason" class="control-label"></label>
+                        &nbsp;<span class="text-danger">*</span>
+                        <div class="row  align-items-center">
+                            <select id="reason" onchange="Km()" class="form-control" asp-for="Reason" asp-items="ViewBag.Reason">
+                                <option value="">কারন নির্ধারণ করুন</option>
+                            </select>
+                        </div>
+                        <span id="errorReason" asp-validation-for="Reason" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" id="otherReasonDiv">
+                        <label asp-for="OtherReason" class="control-label"></label>
+                        <input type="text" asp-for="OtherReason" class="form-control" id="otherReason" />
+                        <span asp-validation-for="OtherReason" class="text-danger"></span>
+                    </div>
+                  </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="ToDate" class="control-label"></label>
+                        <input name="ToDate" id="toDate" autocomplete="off" type="text" placeholder="dd/mm/yyyy" class="form-control date" />
+                        <span id="errorToDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Notes" class="control-label"></label>
+                        <textarea rows="1" asp-for="Notes" class="form-control"> </textarea>
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label">Attached File</label>
+                            <div class="custom-file">
+                                <input name="AttachedFiles[fileCount]" class="form-control custom-file-input" onchange="loadFile(event)" />
+                                <label class="custom-file-label">Choose File...</label>
+                            </div>
+                        </div>*@
+                    </div>
+
+          </div>
+            <div class="form-group pt-3 text-center">
+                <input type="submit" value="আবেদন করুন" class="btn btn-success  ml-5" />
+            </div>  
+
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/uploadFile.js"></script>
+    <script>
+
+
+
+        $(document).ready(function () {
+            $("#earnLeaveTypeDiv").hide();
+            $("#chkbxId").hide();
+            $("#otherReasonDiv").hide();
+        });
+
+        function Km() {
+            var reason = $("#reason").val();
+            if (reason == "অন্যান্য") {
+                $("#otherReasonDiv").show();
+            } else {
+                $("#otherReason").val("");
+                $("#otherReasonDiv").hide();
+            }
+        }
+
+        //$("#submitFrm").submit(function (e) {
+        //    var LeaveTypeId = $("#LeaveTypeId").val();
+        //    if (LeaveTypeId == "" || LeaveTypeId == null) {
+        //        $("#errorLeaveType").text("আবশ্যিক");
+        //        e.preventDefault();
+        //        return;
+        //    }
+        //    var fromDate = $("#fromDate").val();
+        //    if (fromDate == "" || fromDate == null) {
+        //        $("#errorFromDate").text("আবশ্যিক");
+        //        e.preventDefault();
+        //        return;
+        //    }
+        //    var toDate = $("#toDate").val();
+        //    if (toDate == "" || toDate == null) {
+        //        $("#errorToDate").text("আবশ্যিক");
+        //        e.preventDefault();
+        //        return;
+        //    }
+        //    var reason = $("#reason").val();
+        //    if (reason == "" || reason == null) {
+        //        $("#errorReason").text("আবশ্যিক");
+        //        e.preventDefault();
+        //        return;
+        //    }
+        //    var NextApprovedPersonId = $("#NextApprovedPersonId").val();
+        //    if (NextApprovedPersonId == "" || NextApprovedPersonId == null) {
+        //        $("#errorNext").text("আবশ্যিক");
+        //        e.preventDefault();
+        //        return;
+        //    }
+        //})
+
+        $("#LeaveTypeId").change(function () {
+            var leaveId = $("#LeaveTypeId").val();
+            if (leaveId == 3) {
+                $("#earnLeaveTypeDiv").show();
+            } else {
+                $("#earnLeaveTypeDiv").hide();
+                $("#chkbxId").hide();
+            }
+        });
+
+        $("#EarnLeaveType").change(function () {
+            var earnLeaveId = $("#EarnLeaveType").val();
+            if (earnLeaveId == 2) {
+                $("#chkbxId").show();
+            } else {
+                $("#chkbxId").hide();
+            }
+        });
+
+
+        function addFile() {
+            var fileCount = $("#fileId").val();
+
+            var newDiv = '<div class="form-group">' +
+                '<label class="control-label">Attached File</label>' +
+                '<div class="custom-file">' +
+                '<input id="input' + fileCount + '" name="AttachedFiles[' + fileCount + '].Document" class="form-control custom-file-input" onchange="viewName(\'input' + fileCount + '\', \'label' + fileCount + '\' )" type="file"/>' +
+                '<label class="custom-file-label" id="label' + fileCount + '">Choose File...</label>' +
+                '</div>' +
+                '</div>';
+            $("#fileUploadDiv").append(newDiv);
+            var NewFileId = parseFloat(fileCount) + 1;
+            $("#fileId").val(NewFileId);
+
+        }
+
+
+
+        var viewName = function (i, l) {
+            $("#" + i).on("change", function () {
+                var fileName = $("#" + i).val().split("\\").pop();
+                if (fileName.length > 20) {
+                    fileName = fileName.substring(0, 20) + "...";
+                }
+                $("#" + i).next("#" + l).html(fileName);
+            }
+            );
+        };
+
+        function LoadDepartment() {
+            var wingId = $("#wing").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadDepartmentByWingId",
+                data: { wingId: wingId },
+                success: function (res) {
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    $.each(res,
+                        function (index, itemData) {
+                            content += '<option value=' + itemData.id + '>' + itemData.name + '</option>'
+                        })
+                    $("#division").html("");
+                    $("#division").append(content);
+
+                }
+
+            });
+        }
+
+        function LoadSection() {
+            var departmentId = $("#division").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadSectionByDepartmentId",
+                data: { departmentId: departmentId },
+                success: function (res) {
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    $.each(res,
+                        function (index, itemData) {
+                            content += '<option value=' + itemData.id + '>' + itemData.name + '</option>'
+                        })
+                    $("#section").html("");
+                    $("#section").append(content);
+
+                }
+
+            });
+        }
+
+        function LoadUser() {
+            var sectionId = $("#section").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadUserBySectionId",
+                data: { sectionId: sectionId },
+                success: function (res) {
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    $.each(res,
+                        function (index, itemData) {
+                            content += '<option value=' + itemData.id + '>' + itemData.fullName + '</option>'
+                        })
+                    $("#NextApprovedPersonId").html("");
+                    $("#NextApprovedPersonId").append(content);
+                }
+            });
+        }
+
+
+        function OtherReason() {
+            var reason = $("#reason").val();
+            alert(reason);
+            if (reason == "অন্যান্য") {
+                $("#otherReason").show();
+            } else {
+                $("#otherReason").val("");
+                $("#otherReasonDiv").hide();
+            }
+        }
+
+        $(".alert").delay(3000).slideUp(200,
+            function () {
+                $(this).alert('close');
+            });
+    </script>
+
+}

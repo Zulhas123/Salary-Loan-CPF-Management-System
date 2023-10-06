@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsCpfRpt" targetNamespace="http://tempuri.org/dsCpfRpt.xsd" xmlns:mstns="http://tempuri.org/dsCpfRpt.xsd" xmlns="http://tempuri.org/dsCpfRpt.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsCpfRpt" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsCpfRpt" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsCpfRpt">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsCpfReport" msprop:Generator_RowEvHandlerName="dsCpfReportRowChangeEventHandler" msprop:Generator_RowDeletedName="dsCpfReportRowDeleted" msprop:Generator_RowDeletingName="dsCpfReportRowDeleting" msprop:Generator_RowEvArgName="dsCpfReportRowChangeEvent" msprop:Generator_TablePropName="dsCpfReport" msprop:Generator_RowChangedName="dsCpfReportRowChanged" msprop:Generator_UserTableName="dsCpfReport" msprop:Generator_RowChangingName="dsCpfReportRowChanging" msprop:Generator_RowClassName="dsCpfReportRow" msprop:Generator_TableClassName="dsCpfReportDataTable" msprop:Generator_TableVarName="tabledsCpfReport">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BasicSalary" msprop:Generator_ColumnPropNameInTable="BasicSalaryColumn" msprop:Generator_ColumnPropNameInRow="BasicSalary" msprop:Generator_UserColumnName="BasicSalary" msprop:Generator_ColumnVarNameInTable="columnBasicSalary" type="xs:string" minOccurs="0" />
+              <xs:element name="SelfContribution" msprop:Generator_ColumnPropNameInTable="SelfContributionColumn" msprop:Generator_ColumnPropNameInRow="SelfContribution" msprop:Generator_UserColumnName="SelfContribution" msprop:Generator_ColumnVarNameInTable="columnSelfContribution" type="xs:string" minOccurs="0" />
+              <xs:element name="GovtContribution" msprop:Generator_ColumnPropNameInTable="GovtContributionColumn" msprop:Generator_ColumnPropNameInRow="GovtContribution" msprop:Generator_UserColumnName="GovtContribution" msprop:Generator_ColumnVarNameInTable="columnGovtContribution" type="xs:string" minOccurs="0" />
+              <xs:element name="ArrearsBasic" msprop:Generator_ColumnPropNameInTable="ArrearsBasicColumn" msprop:Generator_ColumnPropNameInRow="ArrearsBasic" msprop:Generator_UserColumnName="ArrearsBasic" msprop:Generator_ColumnVarNameInTable="columnArrearsBasic" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalContribution" msprop:Generator_ColumnPropNameInTable="TotalContributionColumn" msprop:Generator_ColumnPropNameInRow="TotalContribution" msprop:Generator_UserColumnName="TotalContribution" msprop:Generator_ColumnVarNameInTable="columnTotalContribution" type="xs:string" minOccurs="0" />
+              <xs:element name="GrandTotal" msprop:Generator_ColumnPropNameInTable="GrandTotalColumn" msprop:Generator_ColumnPropNameInRow="GrandTotal" msprop:Generator_UserColumnName="GrandTotal" msprop:Generator_ColumnVarNameInTable="columnGrandTotal" type="xs:string" minOccurs="0" />
+              <xs:element name="CpfFirstLoan" msprop:Generator_ColumnPropNameInTable="CpfFirstLoanColumn" msprop:Generator_ColumnPropNameInRow="CpfFirstLoan" msprop:Generator_UserColumnName="CpfFirstLoan" msprop:Generator_ColumnVarNameInTable="columnCpfFirstLoan" type="xs:string" minOccurs="0" />
+              <xs:element name="CpfSecondLoan" msprop:Generator_ColumnPropNameInTable="CpfSecondLoanColumn" msprop:Generator_ColumnPropNameInRow="CpfSecondLoan" msprop:Generator_UserColumnName="CpfSecondLoan" msprop:Generator_ColumnVarNameInTable="columnCpfSecondLoan" type="xs:string" minOccurs="0" />
+              <xs:element name="EmployeeName" msprop:Generator_ColumnPropNameInTable="EmployeeNameColumn" msprop:Generator_ColumnPropNameInRow="EmployeeName" msprop:Generator_UserColumnName="EmployeeName" msprop:Generator_ColumnVarNameInTable="columnEmployeeName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

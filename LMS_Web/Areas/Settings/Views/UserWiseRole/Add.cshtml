@@ -1,0 +1,67 @@
+﻿@*@model LMS_Web.Areas.Settings.UserWiseRole*@
+@{
+    ViewData["Title"] = "Add";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-5">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header border">Assign Role</h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+            </div>
+           @* <input type="hidden" id="id" asp-for="Id" class="form-control" />*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+           <div class="form-group">
+                <label class="control-label">User Name</label>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required", @onchange="LoadRole()" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Role</label>
+                @Html.DropDownList("RoleId", new SelectList(ViewBag.RoleList, "Name", "Name"), "Select Role", new { @class = "form-control", @id = "RoleId" })
+            </div>
+             <div class="form-group mt-4 text-center">
+                @*<a class="btn btn-secondary" asp-action="List">List</a>*@
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+           
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+   
+    <script>
+        $(document).ready(function () {
+            $("#Role").css('display', 'block');
+            $("#UserWiseRole").addClass('active');
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Save");
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+
+        });
+        function LoadRole(){
+            
+            var userId = $("#AppUserId").val();           
+             $.ajax({
+                type: "GET",
+                url: "/Settings/UserWiseRole/LoadRole",
+                data: { userId:userId },
+                success: function (res) {                  
+                  $("#RoleId").val(res)
+
+                }
+
+            });
+        }
+
+    </script>
+}

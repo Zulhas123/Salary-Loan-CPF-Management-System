@@ -1,0 +1,62 @@
+﻿@model LMS_Web.Areas.Settings.Models.ChildrenInfo
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Salary/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.AntiForgeryToken()
+
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header border">User Wise Children</h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <input type="hidden" id="userId" value="@ViewBag.UserId" class="form-control" />
+            <div class="form-group">
+                <label class="control-label">User Name</label>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required", @onchange="LoadUserChildren()" })
+            </div>
+
+        </form>
+    </div>
+</div>
+<div style="overflow: auto" id="userChildrenView"></div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#ChildrenInfo").css("display", "block");
+            $(function () {
+                $("#AppUserId").select2();
+            });
+            var userId = $("#userId").val();
+            if (userId != "") {
+                $("#AppUserId").val(userId);
+                LoadUserChildren();
+            }
+
+        });
+
+        function LoadUserChildren() {         
+            var userId = $("#AppUserId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Salary/ChildrenInfo/LoadUserChildreninfo",
+                data: { userId: userId },
+                success: function (res) {
+                    $("#userChildrenView").html("");
+                    $("#userChildrenView").append(res);
+
+                }
+            });
+        }
+    </script>
+}

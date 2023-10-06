@@ -1,0 +1,435 @@
+﻿@model LMS_Web.Models.AppUser
+
+@{
+    ViewData["Title"] = "আপডেট";
+    //var image = "";
+    //if (DbLoggerCategory.Model.Image != null)
+    //{
+    //    image = "/image/user/" + DbLoggerCategory.Model.Image;
+    //}
+    //else
+    //{
+    //    image = "/image/user/no-image.jpg";
+    //}
+
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success text-center mt-2">@ViewBag.SuccessMessage</div>
+}
+
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-8">
+        <form enctype="multipart/form-data" id="submitFrom" class="form-signin create-form bg-white rounded border shadow-sm mt-4 mb-4 pt-5 p-4" method="post">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold">Update User</h1>
+            </div>
+            <div class="row justify-content-between">
+                <input type="hidden" id="id" asp-for="Id" class="form-control" />
+                <input type="hidden" id="depId" value="@Model.DepartmentId" />
+                <input type="hidden" id="secId" value="@Model.SectionId" />
+                <input type="hidden" id="gradeId" value="@Model.CurrentGradeId" />
+                <input type="hidden" id="currentBasic" value="@Model.CurrentBasic" />
+                <input type="hidden" id="stationId" value="@Model.StationId" />
+                <input type="hidden" id="residentStatusId" value="@Model.ResidentialStatusId" />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Full Name</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="FullName" class="text-danger small text-error ml-auto"></span>
+
+                        </div>
+                        <input type="text" asp-for="FullName" class="form-control" tabindex="1" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Grade</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="GradeId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="GradeId" asp-items="ViewBag.Grade" class="form-control" tabindex="6">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Current Basic</label>
+                            &nbsp;<span class="text-danger">*</span>
+                        </div>
+                        <select asp-for="CurrentBasic" asp-items="@(new SelectList(String.Empty,"Amount","Amount"))" class="form-control" tabindex="6">
+
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Station</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="StationId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="StationId" class="form-control" asp-items="ViewBag.Station" tabindex="6">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="WingId"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="WingId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="WingId" asp-items="ViewBag.Wing" class="form-control" onchange="LoadDepartment()" tabindex="5">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="SectionId"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="SectionId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="SectionId" asp-items="@(new SelectList(String.Empty,"Id","Name"))" class="form-control" tabindex="5">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="Gender"></label>
+                            <span asp-validation-for="Gender" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="Gender" class="form-control" tabindex="4">
+                            <option value="পুরুষ">পুরুষ</option>
+                            <option value="মহিলা">মহিলা</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="NID"></label>
+                            <span asp-validation-for="NID" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="text" asp-for="NID" class="form-control" tabindex="7" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="Religion"></label>
+                            <span asp-validation-for="Religion" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="Religion" class="form-control" tabindex="11">
+                            <option value="ইসলাম">ইসলাম</option>
+                            <option value="হিন্দু">হিন্দু</option>
+                            <option value="খ্রিস্টান">খ্রিস্টান</option>
+                            <option value="বৌদ্ধ">বৌদ্ধ</option>
+                            <option value="উপজাতি">উপজাতি</option>
+                            <option value="অন্যান্য">অন্যান্য</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="JoiningDate"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="JoiningDate" id="errorJoining" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" asp-for="JoiningDate" autocomplete="off" class="date form-control" tabindex="8" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Employee Code</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="EmployeeCode" class="text-danger small text-error ml-auto"></span>
+
+                        </div>
+                        <input type="number" asp-for="EmployeeCode" class="form-control" tabindex="1" />
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="IsLiveNear3Km"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="IsLiveNear3Km" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="checkbox" asp-for="IsLiveNear3Km" class="form-control" tabindex="14" />
+                    </div>                    
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Full Name Bangla</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="FullNameBangla" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="text" asp-for="FullNameBangla" class="form-control" tabindex="2" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Current Grade</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="CurrentGradeId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="CurrentGradeId" onchange="LoadCurrentBasic()" asp-items="ViewBag.Grade" class="form-control" tabindex="6">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="BankAccountNo"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="BankAccountNo" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="text" asp-for="BankAccountNo" class="form-control" tabindex="7" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Residential Status</label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="ResidentialStatusId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="ResidentialStatusId" class="form-control" asp-items="ViewBag.ResidentialStatus" tabindex="6">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="DepartmentId"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="DepartmentId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="DepartmentId" onchange="LoadSection()" asp-items="@(new SelectList(String.Empty,"Id","Name"))" class="form-control" tabindex="5">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="DesignationId"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="DesignationId" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="DesignationId" class="form-control" asp-items="ViewBag.Designation" tabindex="6">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="BirthDate"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span id="birthError" asp-validation-for="BirthDate" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" id="Input_BirthDate" asp-for="BirthDate" autocomplete="off" class="date form-control" tabindex="8" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="Type"></label>
+                            <span asp-validation-for="Type" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <select asp-for="Type" class="form-control" tabindex="10">
+                            <option value="স্থায়ী">স্থায়ী</option>
+                            <option value="অস্থায়ী">অস্থায়ী</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="PhoneNumber"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="PhoneNumber" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="number" asp-for="PhoneNumber" class="form-control" tabindex="12" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="PlrAge"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="PlrAge" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="number" asp-for="PlrAge" class="form-control" tabindex="14" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="CPFStartDate"></label>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" asp-for="CPFStartDate" autocomplete="off" class="date form-control" tabindex="8" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label asp-for="IsAllowedForChargeAllowance"></label>
+                            &nbsp;<span class="text-danger">*</span>
+                            <span asp-validation-for="IsAllowedForChargeAllowance" class="text-danger small text-error ml-auto"></span>
+                        </div>
+                        <input type="checkbox" asp-for="IsAllowedForChargeAllowance" class="form-control" tabindex="14" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label"></label>
+                        <div class="custom-file">
+                            <input asp-for="Image" class="form-control custom-file-input" onchange="loadFile(event)" tabindex="15" />
+                            <label class="custom-file-label">Choose Image...</label>
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <img src="~/image/user/no-image.jpg" height="20" width="20" class="upload-box border border-info" id="output" />
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+            <div class="d-flex align-items-center justify-content-between">
+                <label asp-for="ConfirmPassword"></label>
+                &nbsp;<span class="text-danger">*</span>
+                <span asp-validation-for="ConfirmPassword" class="text-danger small text-error ml-auto"></span>
+            </div>
+            <input type="password" asp-for="ConfirmPassword" class="form-control" tabindex="14" />
+        </div>*@
+
+                </div>
+
+                <div class="form-group mt-4">
+                    <input type="submit" value="Update" class="btn btn-success btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/uploadimage.js"></script>
+    <script>
+        $(document).ready(function () {
+            var gradeId = $("#gradeId").val();
+            LoadDepartment();
+            LoadCurrentBasic(gradeId);
+        });
+        $(".alert").delay(3000).slideUp(200,
+            function () {
+                $(this).alert('close');
+            });
+
+        function LoadDepartment() {
+            var wingId = $("#WingId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Sections/GetDepartments",
+                data: { wingId: wingId },
+                success: function (res) {
+                    var depId = $("#depId").val();
+
+                    $("#DepartmentId").html("");
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    $.each(res,
+                        function (index, itemData) {
+
+                            if (depId == itemData.id) {
+                                content += '<option selected="selected" value=' + itemData.id + '>' + itemData.name + '</option>';
+                            } else {
+                                content += '<option value=' + itemData.id + '>' + itemData.name + '</option>';
+                            }
+
+
+
+                        });
+                    $("#DepartmentId").append(content);
+                    LoadSection();
+                }
+            });
+        }
+
+
+        function LoadSection() {
+            var departmentId = $("#DepartmentId").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadSectionByDepartmentId",
+                data: { departmentId: departmentId },
+                success: function (res) {
+                    var secId = $("#secId").val();
+
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    $.each(res,
+                        function (index, itemData) {
+                            if (secId == itemData.id) {
+                                content += '<option selected="selected" value=' + itemData.id + '>' + itemData.name + '</option>';
+                            }
+                            else {
+                                content += '<option value=' + itemData.id + '>' + itemData.name + '</option>';
+                            }
+
+                        });
+                    $("#SectionId").html("");
+                    $("#SectionId").append(content);
+
+                }
+
+            });
+        }
+
+        function LoadCurrentBasic(gradeId) {
+           if(gradeId==undefined){
+                gradeId = $("#CurrentGradeId").val();
+               }
+            $.ajax({
+                type: "GET",
+                url: "/Salary/Grade/GradeWishLoadCurrentBasic",
+                data: { gradeId: gradeId },
+                success: function (res) {
+                    var currentBasic = $("#currentBasic").val();
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    $.each(res,
+                        function (index, itemData) {
+                            if (currentBasic == itemData.amount) {
+                                content += '<option selected="selected" value=' + itemData.amount + '>' + itemData.amount + '</option>';
+                            }
+                            else {
+                                content += '<option value=' + itemData.amount + '>' + itemData.amount + '</option>';
+                            }
+
+                        });
+                    $("#CurrentBasic").html("");
+                    $("#CurrentBasic").append(content);
+
+                }
+
+            });
+        }
+
+        function BirthDateShow(parameters) {
+            var x = document.getElementById('newDobId');
+            var y = document.getElementById('oldDobId');
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+                x.focus();
+                y.style.display = 'none';
+
+            }
+        }
+        function JoinDateShow(parameters) {
+            var x = document.getElementById('newJoinId');
+            var y = document.getElementById('oldJoinId');
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+                x.focus();
+                y.style.display = 'none';
+
+            }
+        }
+    </script>
+}

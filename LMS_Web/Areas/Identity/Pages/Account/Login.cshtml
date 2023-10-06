@@ -1,0 +1,167 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - Salary, CPF & Loan Management</title>
+
+    <link href="~/css/notosansbengali.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Login.css" />
+</head>
+
+<body>
+
+    <div class="container-fluid conya">
+        <div class="side-left">
+            <div class="sid-layy">
+                <div class="row slid-roo justify-content-center">
+                    <div class="data-portion">
+                        <img src="~/image/logo-lg.png" class="img-fluid" />
+                        <h2>বাংলাদেশ পাট গবেষণা ইনস্টিটিউট</h2>
+
+                        <div class="">
+                            <h5 class="text-capitalize subtitle">Salary, CPF and Loan Management Software</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-right">
+
+            <div class="side-left-contain">
+
+                <form id="account" class="form-signin" method="post">
+
+                    <img class="logo" src="~/image/logo.png" alt="logo" />
+
+                    <h2>বাংলাদেশ পাট গবেষণা ইনস্টিটিউট</h2>
+                    <h5 class="text-capitalize subtitle">Salary, CPF and Loan Management Software</h5>
+                    <h6>Sign In</h6>
+
+                    @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                    @Html.ValidationMessage("NoUserError", new { @class = "text-danger" })
+                    @Html.ValidationMessage("PasswordError", new { @class = "text-danger" })
+
+                    <div class="form-row">
+                        <label asp-for="Input.Phone"></label>
+                        <input type="number" asp-for="Input.Phone" id="phone" class="form-control form-control-sm" onkeyup="GetImage()" />
+                        <span asp-validation-for="Input.Phone" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="form-control form-control-sm" />
+                        <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-row row skjh">
+                        <div class="col-7 left no-padding">
+                            <div class="checkbox">
+                                <label asp-for="Input.RememberMe">
+                                    <input asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        @*<div class="col-5">
+                                <span> <a href="">Forget Password ?</a></span>
+                            </div>*@
+
+                    </div>
+
+                    <div class="form-row dfr">
+                        <button class="btn btn-sm btn-success" type="submit">লগইন</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    @*
+        <form id="account" class="form-signin" method="post">
+
+            <div class="profile-img">
+                    <div class="profile-add"></div>
+                </div>
+            <img class="profile-img" id="userImage" />
+            <div class="form-text-wrapper">
+                <div class="text-center  mb-2">
+                    <h1 class="h3 mb-3 font-weight-normal">@ViewData["Title"]</h1>
+                    <h1 class="font-weight-bolder">আপনার ইউজার নেম ও পাসওয়ার্ড দিন</h1>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="font-weight-bold" asp-for="Input.Phone"></label>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="font-weight-bold" asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control form-control-sm" />
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                </div>
+
+                <div class="checkbox mb-3">
+                    <label class="font-weight-bold" asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+
+                <button class="btn custom-btn font-weight-bold mt-4" type="submit">লগইন</button>
+
+                <div class="mt-4 mb-3 text-muted text-center">
+                    <p>
+                            <a id="forgot-password" asp-page="./ForgotPassword">পাসওয়ার্ড ভুলে গিয়েছেন?</a>
+                        </p>
+                    <p class="m-0">
+                            <a class="forget font-weight-bold" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">নতুন একাউন্ট নিবন্ধন করুন</a>
+                        </p>
+                </div>
+            </div>
+        </form>
+    *@
+
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+        function GetImage() {
+            var phoneNumber = $("#phone").val();
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetUserImage",
+                data: { phoneNumber: phoneNumber },
+                success: function (res) {
+                    //$("#userImage").html("");
+                    if (res != null) {
+                        $("#userImage").attr("src", "/image/user/" + res);
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/sidebar.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

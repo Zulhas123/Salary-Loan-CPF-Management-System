@@ -1,0 +1,92 @@
+﻿@model IEnumerable<LMS_Web.Models.Department>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div class="text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">Department</h1>
+</div>
+<div id="MessageDiv" style="text-align: center;">
+    <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+    <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+</div>
+<div class="d-flex justify-content-end mt-4 mb-4">
+    <a class="btn btn-primary" asp-action="Create">নতুন করে যোগ করুন</a>
+</div>
+
+<table class="table display table-striped table-borderless custrom-table mb-2" id="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model=>model.NameBangla)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.WingId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDateTime)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+               @* <td>
+                    @Html.DisplayFor(modelItem=>item.NameBangla)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wing.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedBy.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDateTime)
+                </td>
+                <td>
+                    <a asp-action="Create" asp-route-id="@item.Id">পরিবর্তন করুন |</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('মুছে ফেলতে নিশ্চিত করুন')">মুছে ফেলুন</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    @*<script>
+        $("#Settings").css("display", "block");
+    </script>*@
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#Settings").css("display", "block");
+            $('#table').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,348 @@
+﻿@model IEnumerable<LMS_Web.Areas.Loan.Models.UserWiseLoan>
+
+@{
+    ViewData["Title"] = "User Wise  Loan List";
+    int row = 1;
+}
+@{
+    var lastYM = ViewBag.YearMonth;
+}
+<div class="text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+</div>
+<div id="MessageDiv" style="text-align: center;">
+    <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+    <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+</div>
+<a asp-action="Add" class="btn btn-primary mt-3 mb-3"><i class="fas fa-plus-circle"></i> Add User Wise Loan</a>
+<div class="table-responsive">
+    <table class="table table-striped table-borderless custrom-table mb-2" id="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User Name</th>
+                <th>Loan Head</th>
+                <th>Loan Amount</th>
+                <th>No Of Installment</th>
+                <th>Capital Deduction Amount</th>
+                <th>Interest Deduction Amount</th>
+                <th>Total Installment No For Interest</th>
+                <th>Application Date</th>
+                <th>Approve Date</th>
+                <th>Memorandum No</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var loanName = "";
+                if (item.IsRefundable)
+                {
+                    loanName=item.LoanHeads.DisplayName;
+                }
+                else
+                {
+                    loanName=item.LoanHeads.DisplayName+"(" + @item.NonRefundableLoanNo + ")";
+                }
+                <tr>
+                    <td>@(row++)</td>
+                    <td>@item.AppUsers.EmployeeCode-@item.AppUsers.FullName-@item.AppUsers.Designation.Name</td>
+                    <td>@loanName</td>
+                    <td>@item.LoanAmount</td>
+                    <td>@item.NoOfInstallment</td>
+                    <td>@item.CapitalDeductionAmount</td>
+                    <td>@item.InterestDeductionAmount</td>
+                    <td>@item.NoOfInstallmentForInterest</td>
+                    <td>@item.ApplicationDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (item.ApproveDate.HasValue)
+                        {
+                            @item.ApproveDate.Value.ToString("dd/MM/yyyy");
+                           
+                        }
+                    </td>
+                    <td>@item.MemorandumNo</td>
+                    <td style="width:auto">
+
+                        @if (item != null && item.IsPaid == false && item.IsApprove == true && item.IsRefundable == true)
+                        {
+                            <button class="btn alert-success" onclick="payModal(@item.Id)">Pay</button>
+                        }
+                        @if (item.IsApprove == false)
+                        {
+                            @*<a class="btn btn-info" asp-action="Add" asp-controller="UserWiseLoan"  asp-area="Loan" asp-route-id="@item.Id"><i class="fa fa-edit" title="Edit"></i></a>*@
+                            <a class="btn btn-info" onclick="ApproveModal(@item.Id,'@item.IsRefundable')"><i class="fa fa-check" title="Approve"></i></a>
+                            <a asp-action="DeleteLoan" asp-area="Loan" asp-controller="UserWiseLoan" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure?')"><i title="Delete" class="fa fa-trash"></i></a>
+
+                        }
+                        @* <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>*@
+                        <button class="btn alert-success" onclick="DateEditModal(@item.Id,'@item.ApproveDate','@item.ApplicationDate','@item.MemorandumNo','@item.FromMain','@item.FromInterest','@item.IsRefundable')">Edit</button>
+                    </td>
+                </tr>
+            }
+            @*,'@item.FromMain','@item.FromInterest','@item.IsRefundable'*@
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="approveModalLabel">Installment start from</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="loanId" id="aloanId" />
+                    <div class="row justify-content-between">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Month</label>
+                                &nbsp;<span class="text-danger">*</span>
+                                <select name="month" class="form-control" tabindex="10">
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Approve Date</label>
+                                &nbsp;<span class="text-danger">*</span>
+                                <input type="text" placeholder="dd/mm/yyyy" name="approveDate" class="date form-control" required="required" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Year</label>
+                                &nbsp;<span class="text-danger">*</span>
+                                <select id="ddlYears" name="year" class="form-control"></select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="Approved" asp-controller="UserWiseLoan" id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="approveModal1" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="approveModalLabel">Do you want to approve this loan?</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="hidden" name="loanId" id="aloanId1" />
+                            <div class="form-group">
+                                <label class="control-label">Approve Date</label>
+                                &nbsp;<span class="text-danger">*</span>
+                                <input type="text" placeholder="dd/mm/yyyy" name="approveDate" class="date form-control" required="required" />
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">From Investment</label>
+                                <input type="number" step="any" class="form-control" name="fromInvest" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">From Interest</label>
+                                <input type="number" step="any" class="form-control" name="fromInterest" required="required" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="Approved" asp-controller="UserWiseLoan" id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form enctype="multipart/form-data" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title card-header" id="payModalLabel">Loan Pay</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="loanId" id="payloanId" />
+                    <div class="form-group">
+                        <label class="control-label">Already Paid Amount: <p id="paidAmount"></p> </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Remaining Unpaid Amount (With interest) : <p id="remainingAmount"></p></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pay Order No </label>
+                        <input type="text"  class="form-control" name="payNo" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Payment Date </label>
+                        <input type="date" class="form-control" name="paymentDate" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Paid Amount</label>
+                        <input type="number" step="any" class="form-control" readonly="readonly" name="paidAmount" required="required" id="paidAmountBox" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="LoanPay" asp-controller="UserWiseLoan" id="submitBtn" type="submit" class="btn btn-primary">Pay Now</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="DateEditModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form enctype="multipart/form-data" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title card-header" id="payModalLabel">Edit Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="loanId" id="editDateloanId" />
+                    <div class="form-group">
+                        <label>Application Date</label>
+                        <input type="text" class="form-control date" name="applicationDate" id="applicationDate" />
+                    </div>
+                    <div class="form-group">
+                        <label>Approve Date</label>
+                        <input type="text" class="form-control date" name="approveDate" id="approveDate" />
+                    </div>
+                    <div class="form-group">
+                        <label>Memorandum No</label>
+                        <input type="text" class="form-control" name="memorandumNo" id="memorandumNo" />
+                    </div>
+                    
+                    <div class="form-group cpfDeduction" style="display:none">
+                        <label>From Main</label>
+                        <input type="text" class="form-control" name="fromMain" id="fromMain" />
+                    </div>
+                    <div class="form-group cpfDeduction" style="display:none">
+                        <label>From Interest</label>
+                        <input type="text" class="form-control" name="fromInterest" id="fromInterest" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="DateEdit" asp-controller="UserWiseLoan" id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Loan").css("display", "block");
+            UpdateBtn();
+
+            var currentYear = (new Date()).getFullYear() + 12;
+            var ddlYears = document.getElementById("ddlYears");
+
+            for (var i = 2005; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddlYears.appendChild(option);
+            }
+
+        });
+        function ApproveModal(id, isRefundable) {
+            if (isRefundable == "False") {
+                $("#aloanId1").val(id);
+                $("#approveModal1").modal("show")
+            } else {
+                $("#aloanId").val(id);
+                $("#approveModal").modal("show")
+            }
+
+        }
+
+        function payModal(id) {
+            $.ajax({
+                type: "GET",
+                url: "/Loan/UserWiseLoan/CalculateRemainingLoan",
+                data: { id: id },
+                success: function (res) {
+                    $("#paidAmount").html(res.paidAmount)
+                    $("#remainingAmount").html(res.remainingAmount)
+                    $("#paidAmountBox").val(res.remainingAmount)
+
+                }
+
+            });
+
+            $("#payloanId").val(id);
+            $("#payModal").modal("show")
+
+        }
+                //, fromMain, fromInterest, isRefundable
+        function DateEditModal(id, approveDate, applicationDate, memorandumNo, fromMain, fromInterest, isRefundable) {
+            $("#applicationDate").val(applicationDate);
+            $("#approveDate").val(approveDate);
+            $("#memorandumNo").val(memorandumNo);
+            $("#editDateloanId").val(id);           
+            if(isRefundable=="False"){              
+                $(".cpfDeduction").css("display", "block");
+                $("#fromMain").val(fromMain);
+                $("#fromInterest").val(fromInterest);
+            }
+            $("#DateEditModal").modal("show")
+
+        }
+
+        function UpdateBtn() {
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+
+        };
+
+        $('#table').DataTable();
+    </script>
+}

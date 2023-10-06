@@ -1,0 +1,26 @@
+﻿@model LMS_Web.Models.LeaveReason
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-5">
+        <form asp-action="Edit" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold">ছুটির কারন হালনাগাদ করুন</h1>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input required="required" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="Index">ছুটির কারনের তালিকা</a>
+                <input type="submit" value="সংরক্ষণ করুন" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

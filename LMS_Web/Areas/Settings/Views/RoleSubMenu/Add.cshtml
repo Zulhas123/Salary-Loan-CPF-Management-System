@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Role Sub Menu Add";
+    Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="shadow bg-light m-0 rounded">
+    <h4 class="h5 mb-3 font-weight-bold card-header border">@ViewBag.Title</h4>
+    <div class="col-md-8 m-auto pb-5">
+        <div class="input-group">
+            <label class="col-md-3 mt-2">Select Role</label>
+            <div class="col-md-8">
+                @Html.DropDownList("RoleId", new SelectList(ViewBag.RoleList, "Id", "Name"), "Select Role", new { @class = "form-control", @id = "RoleId", @onchange = "LoadSubmenu()" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div style="overflow: auto" id="submenuList"></div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Role").css('display', 'block');
+            $("#RoleWiseAccess").addClass('active');
+         
+           
+        });
+
+        function LoadSubmenu() {
+            var RoleId = $("#RoleId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Settings/RoleSubMenu/SubMenuList",
+                data: { RoleId: RoleId },
+                success: function (res) {
+                    $("#submenuList").html("");
+                    $("#submenuList").append(res);
+
+                }
+            });
+        }
+        function SaveSubmenuRole() {
+            var roleId = $("#RoleId").val();
+            var submenuIdArray = [];
+            $('input.allCheckbox[type=checkbox]').each(function () {
+                if (this.checked)
+                    submenuIdArray.push(
+                        $(this).val()
+                    );
+            });
+            var submenuId = JSON.stringify(submenuIdArray);
+
+            $.ajax({
+                type: "POST",
+                url: "/Settings/RoleSubMenu/InsertRoleMapping",
+                data: { submenuId: submenuId, roleId: roleId },
+                success: function (res) {
+                    if (res == true) {
+                        alert("Saved");
+                    } else {
+                        alert("Not Save. Please try again")
+
+                    }
+                }
+            });
+        }
+
+
+    </script>
+        }

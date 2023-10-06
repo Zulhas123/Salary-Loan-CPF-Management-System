@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Utility" targetNamespace="http://tempuri.org/Utility.xsd" xmlns:mstns="http://tempuri.org/Utility.xsd" xmlns="http://tempuri.org/Utility.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Utility" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="Utility" msprop:Generator_DataSetName="Utility">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Utility" msprop:Generator_RowEvHandlerName="UtilityRowChangeEventHandler" msprop:Generator_RowDeletedName="UtilityRowDeleted" msprop:Generator_RowDeletingName="UtilityRowDeleting" msprop:Generator_RowEvArgName="UtilityRowChangeEvent" msprop:Generator_TablePropName="_Utility" msprop:Generator_RowChangedName="UtilityRowChanged" msprop:Generator_RowChangingName="UtilityRowChanging" msprop:Generator_TableClassName="UtilityDataTable" msprop:Generator_RowClassName="UtilityRow" msprop:Generator_TableVarName="tableUtility" msprop:Generator_UserTableName="Utility">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SlNo" msprop:Generator_ColumnPropNameInRow="SlNo" msprop:Generator_ColumnPropNameInTable="SlNoColumn" msprop:Generator_ColumnVarNameInTable="columnSlNo" msprop:Generator_UserColumnName="SlNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="Elctricity" msprop:Generator_ColumnPropNameInRow="Elctricity" msprop:Generator_ColumnPropNameInTable="ElctricityColumn" msprop:Generator_ColumnVarNameInTable="columnElctricity" msprop:Generator_UserColumnName="Elctricity" type="xs:string" minOccurs="0" />
+              <xs:element name="Gas" msprop:Generator_ColumnPropNameInRow="Gas" msprop:Generator_ColumnPropNameInTable="GasColumn" msprop:Generator_ColumnVarNameInTable="columnGas" msprop:Generator_UserColumnName="Gas" type="xs:string" minOccurs="0" />
+              <xs:element name="HouseRent" msprop:Generator_ColumnPropNameInRow="HouseRent" msprop:Generator_ColumnPropNameInTable="HouseRentColumn" msprop:Generator_ColumnVarNameInTable="columnHouseRent" msprop:Generator_UserColumnName="HouseRent" type="xs:string" minOccurs="0" />
+              <xs:element name="Water" msprop:Generator_ColumnPropNameInRow="Water" msprop:Generator_ColumnPropNameInTable="WaterColumn" msprop:Generator_ColumnVarNameInTable="columnWater" msprop:Generator_UserColumnName="Water" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,70 @@
+﻿@model LMS_Web.Areas.CPF.Models.InvestmentInfo;
+@{
+    ViewData["Title"] = "PRL Investment Report";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2 border">
+    <div class="col-md-6">
+        <form method="post" asp-action="PRLInvestmentReport" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4 card">
+                <h1 class="h5 mb-3 font-weight-bold card-header border">PRL Interest Report</h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label class="control-label">User</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required" })
+            </div>
+            @*<div class="col-md-6">
+            <div class="form-group">
+            <label class="control-label">Fiscal Year</label>
+            @Html.DropDownList("fiscalYear", new SelectList(ViewBag.FiscalYear, "Id", "Value"), "Select Fiscal Year", new { @class = "form-control", @required = "required" })
+            </div>
+            </div>*@
+
+
+            <div class="form-group mt-4 text-center">
+                <input type="submit" name="btnValue" id="submitBtn" formtarget="_blank" value="Print" class="btn btn-primary form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Interest").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Print");
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+            var currentfYear = (new Date()).getFullYear() + 12;
+            var ddlfYears = document.getElementById("ddlfYears");
+
+            for (var i = 2022; i <= currentfYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddlfYears.appendChild(option);
+            }
+
+            var currenttYear = (new Date()).getFullYear() + 12;
+            var ddltYears = document.getElementById("ddltYears");
+
+            for (var i = 2022; i <= currenttYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddltYears.appendChild(option);
+            }
+
+        });
+
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@model LMS_Web.Areas.CPF.ViewModels.CpfDeductionVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/CPF/Views/Shared/_Layout.cshtml";
+}
+
+@if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+{
+    @Html.AntiForgeryToken()
+    <div class="text-center">
+        <h1 class="display-5 mt-4 mb-4 p-2">ড্যাশবোর্ড</h1>
+        <div class="row justify-content-center mb-4 pl-5 pr-5">
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <div class="text-dark-75 pb-4">সর্বমোট ঋণ</div>
+                                <a asp-controller="UserWiseLoan" asp-action="List" target="_blank" class="font-weight-bold font-size-h4 d-inline-block mb-3">0</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <div class="text-dark-75 pb-4" target="_blank">সর্বমোট পরিশোধ ঋণ</div>
+                                <a asp-action="TotalPaidLoanList" class="font-weight-bold font-size-h4 d-inline-block mb-3">0</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <div class="text-dark-75 pb-4" target="_blank">সর্বমোট CPF ঋণ</div>
+                                <a asp-action="TotalCPFLoanList" class="font-weight-bold font-size-h4 d-inline-block mb-3">0</a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a href="http://www.bjri.gov.bd/site/view/notices" class="font-weight-bold font-size-h4 d-inline-block mb-3">নোটিশ</a>
+                                <div class="text-dark-75"><a href="http://www.bjri.gov.bd/site/view/notices" target="_blank">বাংলাদেশ পাট গবেষণা ইনস্টিটিউট (বিজেআরআই)</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @*<div class="col-lg-3">
+        <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+        <div class="card-body">
+        <div class="align-items-center">
+        <div class="text-center">
+        <div class="text-dark-75">বর্তমান সুদের কিস্তি</div>
+        <a asp-controller="Leaves" asp-action="Balance" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.curInsInterest</a>
+        <div class="text-dark-75">বর্তমান মূলধন কিস্তি</div>
+        <a asp-controller="Leaves" asp-action="Balance" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.curInsCapital</a>
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+        <div class="col-lg-3">
+        <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+        <div class="card-body">
+        <div class="align-items-center">
+        <div class="text-center">
+        <div class="text-dark-75">মোট মূলধন কিস্তি</div>
+        <a asp-controller="Leaves" asp-action="Balance" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.totalCapitalIns</a>
+        <div class="text-dark-75">মোট সুদের কিস্তি</div>
+        <a asp-controller="Leaves" asp-action="Balance" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.totalInterestInstal</a>
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+        <div class="col-lg-3">
+        <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+        <div class="card-body">
+        <div class="align-items-center">
+        <div class="text-center">
+        <div class="text-dark-75">মোট পি.আর.ল কর্মকর্তা</div>
+        <a asp-controller="Leaves" asp-action="Balance" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.TotalPRLUser</a>
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+        <div class="col-lg-3">
+        <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+        <div class="card-body">
+        <div class="align-items-center">
+        <div class="text-center">
+        <a asp-controller="Leaves" asp-action="Balance" class="font-weight-bold font-size-h4 d-inline-block mb-3">বিস্তারিত</a>
+        <div class="text-dark-75"><a href="http://www.bjri.gov.bd/">বাংলাদেশ পাট গবেষণা ইনস্টিটিউট (বিজেআরআই)</a></div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>*@
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-5 mt-4 mb-4 p-2">ড্যাশবোর্ড</h1>
+        <div class="row justify-content-center mb-4 pl-5 pr-5">
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a href="http://www.bjri.gov.bd/site/view/notices" class="font-weight-bold font-size-h4 d-inline-block mb-3">নোটিশ</a>
+                                <div class="text-dark-75"><a href="http://www.bjri.gov.bd/site/view/notices" target="_blank">বাংলাদেশ পাট গবেষণা ইনস্টিটিউট (বিজেআরআই)</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a href="http://www.bjri.gov.bd/" target="_blank" class="font-weight-bold font-size-h4 d-inline-block mb-3">বিস্তারিত</a>
+                                <div class="text-dark-75 mb-4"><a href="http://www.bjri.gov.bd/" target="_blank">বাংলাদেশ পাট গবেষণা ইনস্টিটিউট (বিজেআরআই)</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+    {
+    <script>
+        $("#Dashboard").css("display", "block");
+    </script>
+}
+

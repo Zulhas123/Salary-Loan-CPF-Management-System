@@ -1,0 +1,38 @@
+﻿@model LMS_Web.ViewModels.CalenderHolidayViewModel
+
+
+@{
+    ViewData["Title"] = "ক্যালেন্ডার";
+}
+
+<input type="hidden" value="@DateTime.Now" id="hiddenDate" />
+<div id="partialView"></div>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            var monthYear = $("#hiddenDate").val();
+            GetHolidays(monthYear);
+        });
+
+        function GetHolidays(monthYear) {
+
+            if (monthYear == null) {
+                monthYear = $("#monthYear").val();
+            }
+            $.ajax({
+                type: "GET",
+                url: "/Holidays/GetHolidays",
+                data: { monthYear: monthYear },
+                success: function (res) {
+                    $("#initialDiv").hide();
+                    $("#partialView").html("");
+                    $("#partialView").append(res);
+
+                }
+
+            });
+        }
+    </script>
+}

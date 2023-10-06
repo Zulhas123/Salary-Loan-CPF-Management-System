@@ -1,0 +1,80 @@
+﻿@model LMS_Web.Areas.Loan.Models.UserWiseLoan
+@{
+    ViewData["Title"] = "Edit";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Edit" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold"></h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+
+            <div class="form-group">
+                <label class="control-label">User</label>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.users, "Id", "FullName"), "Select User", new { @class = "form-control", @required = "required", @readonly="readonly"})
+               
+            </div>
+                   
+                    <div class="form-group">
+                        <label class="control-label">Loan Head</label>
+                        @Html.DropDownList("LoanHeadId", new SelectList(ViewBag.loanHead, "Id", "Name"), "Select Loan Head", new { @class = "form-control", @required = "required", @readonly="readonly" })
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Loan Amount</label>
+                        <input id="" type="number" min="1" asp-for="LoanAmount" required class="form-control" readonly="readonly"/>
+                        <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                    </div>
+             
+              
+                   <div class="form-group">
+                        <label class="control-label">No Of Installment</label>
+                        <input id="" type="number" min="1" asp-for="NoOfInstallment" required class="form-control" readonly="readonly"/>
+                        <span asp-validation-for="NoOfInstallment" class="text-danger"></span>
+                    </div>
+           @* <div class="form-group">
+                <label class="control-label">Interest Deduction Amount</label>
+                <input   asp-for="InterestDeductionAmount"  class="form-control" />
+                <span asp-validation-for="InterestDeductionAmount" class="text-danger"></span>
+            </div>
+                   <div class="form-group">
+                <label class="control-label">Installment No For Interest</label>
+                <input  asp-for="NoOfInstallmentForInterest" class="form-control" />
+                <span asp-validation-for="NoOfInstallmentForInterest" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label class="control-label">Application Date</label>
+                <input id="amount" required="required" asp-for="ApplicationDate" class="form-control"/>
+                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Approve Date</label>
+                <input id="amount" required="required" asp-for="ApplicationDate" class="form-control"/>
+                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="List">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Update" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Deduction").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val;
+
+            }
+
+        });
+
+    </script>
+}

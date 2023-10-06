@@ -1,0 +1,301 @@
+﻿@model IEnumerable<LMS_Web.Models.AppUser>
+
+@{
+    ViewData["Title"] = "কর্মীবৃন্দ";
+}
+
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+
+
+<div class="text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+</div>
+<div id="MessageDiv" style="text-align: center;">
+    <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+    <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+</div>
+<a asp-action="Register" asp-controller="Account" asp-area="Identity" class="btn btn-primary mt-3 mb-3"><i class="fas fa-plus-circle"></i> Add User</a>
+
+<div class="table-responsive">
+    <table class="table table-striped table-borderless custrom-table mb-2" id="table">
+        <thead>
+            <tr>
+                <th>
+                    ছবি
+                </th>
+                <th>
+                    নাম
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeCode)
+                </th>
+                <th>উইং</th>
+
+                <th>
+                    বিভাগ
+                </th>
+                <th>শাখা</th>
+                <th>
+                    পদবি
+                </th>
+                <th>
+                    ফোন নাম্বার
+                </th>
+                <th>
+                    পি এল আর
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var prlDate = item.BirthDate.AddYears(item.PlrAge).ToString("dd-MMM-yy");
+                var imageUrl = "~/image/user/" + (item.Image ?? "no-image.jpg");
+                <tr>
+                    <td>
+                        <img style="height: auto; width: 30px" class="card-img-top" src="@imageUrl" asp-append-version="true" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCode)
+                    </td>
+                    <td>
+                        @if (item.Wing != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Wing.Name)
+                        }
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.Name)
+                    </td>
+                    <td>
+                        @if (item.Section != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Section.Name)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Designation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @prlDate
+                    </td>
+                    <td>
+                        <a asp-area="" asp-action="UpdateUserInfoForAdmin" asp-controller="AppUser" asp-route-id="@item.Id">Change</a> ।
+                        <a asp-area="" asp-action="Delete" asp-controller="AppUser" asp-route-id="@item.Id" onclick="return confirm('Are you sure?')">Deative |</a> 
+                        @if(item.IsSuspended==false){
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#SuspensionModal" onclick="SuspendId('@item.Id')">Suspend |</a>
+                        }
+                        @if(item.IsLien==false){
+                        <a asp-area="" asp-action="LienUser" asp-controller="AppUser" asp-route-id="@item.Id" onclick="return confirm('Are you sure?')">Lien |</a>
+                        }
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#transferModal" onclick="TransferId('@item.Id')">Transfer |</a>
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#resignModal" onclick="ResignId('@item.Id')">Resign |</a>
+                        <a style="cursor:pointer" data-toggle="modal" data-target="#resetModal" onclick="ResetPassword('@item.Id')">Reset Password</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!--Transfer Modal -->
+<div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" name="userId" id="userId" />
+                    <h5 class="modal-title">Add User Transfer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Station</label>
+                        </div>
+                        <select name="toStation" class="form-control" asp-items="ViewBag.Station">
+                            <option value="">নির্ধারন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>New Station Join Date</label>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" autocomplete="off" name="newStationJoinDate" class="date form-control" />
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Current Station Last Date</label>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" autocomplete="off" name="currentStationLastOfficeDate" class="date form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="AddTransferUser" asp-controller="AppUser" id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--Resign Modal -->
+<div class="modal fade" id="resignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" name="resignUserId" id="resignUserId" />
+                    <h5 class="modal-title">User Resign Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Resignation Date</label>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" autocomplete="off" name="resignationDate" class="date form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="ResignUser" asp-controller="AppUser" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--Suspension Modal -->
+<div class="modal fade" id="SuspensionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" name="SuspensionuserId" id="SuspensionuserId" />
+                    <h5 class="modal-title">Suspension User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Start Date</label>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" autocomplete="off" name="StartDate" class="date form-control" />
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>End Date</label>
+                        </div>
+                        <input type="text" placeholder="dd/mm/yyyy" autocomplete="off" name="EndDate" class="date form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-action="SuspendUser" asp-controller="AppUser" id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="resetuserId" name="id" />
+                    <h5 class="modal-title">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>New Password</label>
+                        </div>
+                        <input type="password" placeholder="New Password" autocomplete="off" name="password" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <label>Password Password </label>
+                        </div>
+                        <input type="password" placeholder="Confirm Password" autocomplete="off" name="confirmPassword" class="form-control" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button asp-action="ResetPassword" asp-controller="AppUser" type="submit" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+
+    <script>
+        $("#Settings").css("display", "block");
+
+        function ResetPassword(id) {
+            $("#resetuserId").val(id);
+        }
+        function TransferId(id) {
+            $("#userId").val(id);
+        }
+
+        function SuspendId(id) {
+            $("#SuspensionuserId").val(id);
+        }
+
+        function ResignId(id) {
+            $("#resignUserId").val(id);
+        }
+
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+        //$(document).ready(function () {
+        //    $('#lienUser').click(function () {
+        //        Swal.fire({
+        //            title: 'Are you sure?',
+        //            text: "You won't be able to revert this!",
+        //            icon: 'warning',
+        //            showCancelButton: true,
+        //            confirmButtonColor: '#3085d6',
+        //            cancelButtonColor: '#d33',
+        //            confirmButtonText: 'Yes, delete it!'
+        //        }).then((result) => {
+        //            if (result.isConfirmed) {
+        //                Swal.fire(
+        //                    'Deleted!',
+        //                    'Your file has been deleted.',
+        //                    'success'
+        //                )
+        //            }
+        //        });
+        //    });
+        //});
+
+    </script>
+}

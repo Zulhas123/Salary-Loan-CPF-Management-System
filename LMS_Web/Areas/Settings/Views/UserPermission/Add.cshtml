@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Settings/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h4 mb-3 font-weight-bold card-header border">User Station Permission </h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.SuccessMessage</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.ErrorMessage</span></label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Select User</label>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required", @onchange="LoadStation()" })
+            </div>
+            <div style="overflow: auto" id="stationList"></div>
+            @*<div class="form-group"></div>
+            <div class="form-group mt-4 text-center">
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>*@
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#Role").css('display', 'block');
+            $("#AddRole").addClass('active');
+        });
+        $(function () {
+            $("#AppUserId").select2();
+        });
+    
+        function LoadStation() {
+            var userId = $("#AppUserId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Settings/UserPermission/LoadStation",
+                data: { userId: userId },
+                success: function (res) {
+                    $("#stationList").html("");
+                    $("#stationList").append(res);
+
+                }
+            });
+        }
+        function SaveStation() {
+            var userId = $("#AppUserId").val();
+            var stationIdArray = [];
+            $('input.allCheckbox[type=checkbox]').each(function () {
+                if (this.checked)
+                    stationIdArray.push(
+                        $(this).val()
+                    );
+            });
+            var stationId = JSON.stringify(stationIdArray);
+
+            $.ajax({
+                type: "POST",
+                url: "/Settings/UserPermission/SaveStation",
+                data: { stationIds: stationId, userId: userId },
+                success: function (res) {
+                    if (res == true) {
+                        alert("Saved");
+                    } else {
+                        alert("Not Save. Please try again")
+
+                    }
+                }
+            });
+        }
+    </script>
+}

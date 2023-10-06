@@ -1,0 +1,171 @@
+﻿@model LMS_Web.ViewModels.UserDashboardDataViewModel
+@{
+    ViewData["Title"] = "UserDashboard";
+}
+
+
+<div class="custom-dashboard text-center">
+    <h1 class="display-5 mt-4 mb-4 p-2">ব্যক্তিগত ড্যাশবোর্ড</h1>
+    <div class="row justify-content-center pl-5 pr-5">
+        <div class="col-lg-3">
+            <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                <div class="card-body">
+                    <div class="align-items-center">
+                        <div class="text-center">
+                            <a class="font-weight-bold font-size-h4 d-inline-block mb-3">@Model.TotalLeaveCount</a>
+                            <div class="text-dark-75">মোট ছুটি নিয়েছেন</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        @foreach (var item in Model.LeaveQuotas)
+        {
+
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a class="font-weight-bold font-size-h4 d-inline-block mb-3">@item.Balance</a>
+                                <div class="text-dark-75">@item.LeaveType.Name ছুটি অবশিষ্ট</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.EarnLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.EarnLeave</a>
+                                <div class="text-dark-75">অর্জিত গড় ছুটির সংখ্যা</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.EarnLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.EarnHalfLeave</a>
+                                <div class="text-dark-75">অর্জিত অর্ধ গড় ছুটির সংখ্যা <span class="text-dark font-weight-bolder">(গড় @(Math.Round((decimal)ViewBag.EarnHalfLeave / 2)))</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.MaternityLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a asp-controller="AppUser" asp-action="Index" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.MaternityLeave</a>
+                                <div class="text-dark-75">বার নিয়েছেন</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.NotDueLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a asp-controller="AppUser" asp-action="Index" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.NotDueLeave</a>
+                                <div class="text-dark-75">ছুটি নিয়েছেন</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.RestAndRecreationLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.RestAndRecreationLeave.ToString("MM/dd/yyyy")</a>
+                                <div class="text-dark-75">পরবর্তী শ্রান্তি বিনোদন</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.SpecialDisabilityLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a asp-controller="AppUser" asp-action="Index" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.SpecialDisabilityLeave</a>
+                                <div class="text-dark-75">ছুটি নিয়েছেন</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.StudyLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a asp-controller="AppUser" asp-action="Index" class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.StudyLeave</a>
+                                <div class="text-dark-75">ছুটি নিয়েছেন</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.MaternityLeave != null)
+        {
+            <div class="col-lg-3">
+                <div class="card custom-card card-stretch gutter-b wave wave-animate-slow wave-success p-0 mb-4">
+                    <div class="card-body">
+                        <div class="align-items-center">
+                            <div class="text-center">
+                                <a class="font-weight-bold font-size-h4 d-inline-block mb-3">@ViewBag.MaternityLeave</a>
+                                <div class="text-dark-75">দিন প্রসূতি ছুটি নিয়েছেন</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

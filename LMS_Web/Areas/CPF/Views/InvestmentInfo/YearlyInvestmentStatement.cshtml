@@ -1,0 +1,89 @@
+﻿@model LMS_Web.Areas.CPF.Models.InvestmentInfo;
+@{
+    ViewData["Title"] = "Investment Report";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2 border">
+    <div class="col-md-6">
+        <form method="post" asp-action="YearlyInvestmentStatement" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4 card">
+                <h1 class="h5 mb-3 font-weight-bold card-header border"> Yearly Interest Report</h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row border">
+                <div class="col-6 border">
+                    <div class="form-group">
+                        <label class="control-label">Station</label>
+                        <span class="text-danger">*</span>
+                        @Html.DropDownList("StationId", new SelectList(ViewBag.Stations, "Id", "Name"), "Select Station", new { @class = "form-control",@required="required"})
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">From Grade</label>
+                        @Html.DropDownList("FromGradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select From Grade", new { @class = "form-control", })
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Fiscal Year</label>
+                        @Html.DropDownList("fiscalYear", new SelectList(ViewBag.FiscalYear, "Id", "Value"), "Select Fiscal Year", new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+                <div class="col-6 border">
+                    <div class="form-group">
+                        <label class="control-label">Wings</label>
+                        @Html.DropDownList("WingId", new SelectList(ViewBag.Wings, "Id", "Name"), "Select Wings", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">To Grade</label>
+                        @Html.DropDownList("ToGradeId", new SelectList(ViewBag.Grade, "Id", "Name"), "Select From Grade", new { @class = "form-control"})
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group mt-4 text-center" id="reportviewer">
+                <input type="submit" name="btnValue" id="submitBtn" formtarget="_blank" value="Print" class="btn btn-primary form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Interest").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+
+            var currentfYear = (new Date()).getFullYear() + 12;
+            var ddlfYears = document.getElementById("ddlfYears");
+
+            for (var i = 2015; i <= currentfYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddlfYears.appendChild(option);
+            }
+
+            var currenttYear = (new Date()).getFullYear() + 12;
+            var ddltYears = document.getElementById("ddltYears");
+
+            for (var i = 2015; i <= currenttYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddltYears.appendChild(option);
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Report";
+}
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+<div class="form-row align-items-center justify-content-center custom-form shadow-sm ml-5 mt-5 mr-5 mb-5 p-4">
+    <div class="col-lg-2 mr-lg-2">
+        <label>ছুটির ধরণ</label>
+    </div>
+    <div class="col-lg-8">
+        @Html.DropDownList("LeaveId", new SelectList(ViewBag.LeaveList, "Id", "Name"), "ছুটির ধরন", new { @class = "form-control", @onchange = "LoadLeave()" })
+    </div>
+</div>
+
+<div id="leaveListDiv"></div>
+
+
+@section scripts
+{
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script>
+        
+        function LoadLeave() {
+            var leaveId = $("#LeaveId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Home/LeaveReport",
+                data: { leaveId: leaveId },
+                success: function (res) {
+                    $("#leaveListDiv").html("");
+                    $("#leaveListDiv").append(res);
+                }
+            });
+        }
+            //$("#leaveBalance").DataTable();
+
+            //function PrintDiv() {
+            //    var divToPrint = document.getElementById('print');
+            //    var popupWin = window.open('', '_blank');
+            //    popupWin.document.open();
+            //    popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+            //    popupWin.document.close();
+            //}
+
+            //function printDiv(divName) {
+            //    var printContents = document.getElementById(divName).innerHTML;
+            //    var originalContents = document.body.innerHTML;
+
+            //    document.body.innerHTML = printContents;
+
+            //    window.print();
+
+            //    document.body.innerHTML = originalContents;
+            //}
+
+
+    </script>
+}

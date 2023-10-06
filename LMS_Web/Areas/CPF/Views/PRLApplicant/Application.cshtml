@@ -1,0 +1,53 @@
+﻿@model LMS_Web.Areas.CPF.Models.PRlApplicantInfo
+@{
+    ViewData["Title"] = "Application";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="Application" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header">PRL Application Form </h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <div class="form-group">
+                <label class="control-label">User Name</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Application Date</label>
+                <input required="required" asp-for="ApplicationDate" type="date" class="form-control" />
+                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top: 13%;">
+                <input id="" checked="checked" asp-for="IsApproved" />
+                <label class="control-label">Is Approved</label>
+                <span asp-validation-for="IsApproved" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="List">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#PRL").css("display", "block");
+           
+              $(function () {
+                $("#AppUserId").select2();
+            });
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+        });
+
+    </script>
+    }

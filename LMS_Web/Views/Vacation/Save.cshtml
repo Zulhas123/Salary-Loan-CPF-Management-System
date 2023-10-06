@@ -1,0 +1,55 @@
+﻿@model LMS_Web.Models.Leave
+
+@{
+    ViewData["Title"] = "ছুটি বরাদ্দ করুন";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<div class="row mt-5 mb-5">
+    <div class="col-md-5 div-userinfo m-auto">
+        <form method="post" asp-controller="Vacation" asp-action="Save">
+            <h4>@ViewData["Title"] </h4>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="LeaveType" class="control-label"></label>
+                <select asp-for="LeaveTypeId" class="form-control" asp-items="ViewBag.LeaveType"></select>
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="FromDate" class="control-label"></label>
+                <input asp-for="FromDate" class="form-control" />
+                <span asp-validation-for="FromDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="ToDate" class="control-label"></label>
+                <input asp-for="ToDate" class="form-control" />
+                <span asp-validation-for="ToDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="LeaveQuota" class="control-label"></label>
+                <input asp-for="LeaveQuota" class="form-control" />
+                <span asp-validation-for="LeaveQuota" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <label asp-for="Detail" class="control-label"></label>
+                <input asp-for="Detail" class="form-control" />
+                <span asp-validation-for="Detail" class="text-danger"></span>
+            </div>
+            <div class="form-group col-10 col-md-9 p-0">
+                <button type="submit" class="btn btn-primary pl-3 pr-3 mr-4">Add</button>
+
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>

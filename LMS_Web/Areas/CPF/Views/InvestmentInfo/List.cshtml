@@ -1,0 +1,56 @@
+﻿@model IEnumerable<LMS_Web.Areas.CPF.Models.InvestmentInfo>
+
+@{
+    ViewData["Title"] = "Interest Information";
+    int row = 1;
+}
+<div class="bg-light mt-4 p-3">
+    <div class="text-center mb-4 card m-2">
+        <h1 class="display-5 mt-4 mb-4 p-2">@ViewData["Title"] </h1>
+    </div>
+    <div id="MessageDiv" style="text-align: center;">
+        <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+        <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+    </div>
+    <a asp-action="InvestmentInfoCalculate" asp-controller="InvestmentInfo" class="btn btn-primary mt-3 mb-3"><i class="fas fa-plus-circle"></i>Interest Calculate</a>
+    <div class="table-responsive">
+        <table class="table table-striped table-borderless custrom-table mb-2" id="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User Name</th>
+                    <th>Investment Amount</th>
+                    @*<th>Total Investment</th>*@
+                    <th>Month</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>@(row++)</td>
+                        <td>@item.AppUser.FullName</td>
+                        <td>@item.InvestmentAmount</td>
+                       @* <td>@item.TotalInvestment</td>*@
+                        <td>@item.Month</td>
+                        <td>@item.Year</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#CPF").css("display", "block");
+            $('#table').DataTable();
+        });
+    </script>
+}
+
+
+

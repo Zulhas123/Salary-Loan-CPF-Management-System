@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "Balance";
+    Layout = "_Layout";
+}
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+
+<div class="text-center">
+    <h2 class="display-5 mt-4 mb-4 p-2">অবশিষ্ট ছুটি</h2>
+</div>
+
+<div class="form-row align-items-center justify-content-center custom-form shadow-sm ml-5 mr-5 mb-5 p-4">
+
+    <div class="col-lg-3 mr-lg-3 mb-3">
+        <div class="d-flex">
+            <label>বছর</label>
+            <span id="yearError" class="text-danger ml-auto font-weight-bold"></span>
+        </div>
+        <select id="year" class="form-control"></select>
+    </div>
+
+
+    <div class="col-lg-3 mr-lg-3 mb-3">
+        <div class="d-flex">
+            <label>কর্মী</label>
+            <span id="empError" class="text-danger ml-auto font-weight-bold"></span>
+        </div>
+        <select id="employee" asp-items="ViewBag.Employee" class="form-control">
+            <option value="">কর্মী সিলেক্ট করুন</option>
+        </select>
+    </div>
+
+    <div class="col-lg-3 mr-lg-3 mb-3">
+        <div class="d-flex">
+            <label>ছুটির ধরন</label>
+            <span id="typeError" class="text-danger ml-auto font-weight-bold"></span>
+        </div>
+        <select id="leaveType" class="form-control" asp-items="ViewBag.LeaveType">
+            <option value="">ছুটির ধরন সিলেক্ট করুন</option>
+        </select>
+    </div>
+
+    <div class="col-auto mt-1">
+        <input type="button" onclick="LoadLeave()" class="btn btn-success" value="খুজুন" />
+    </div>
+
+</div>
+
+
+<div id="balanceDiv"></div>
+
+@section scripts
+{
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            LoadYear();
+        });
+        function LoadYear() {
+            var i;
+            var content = "<option value=''>বছর সিলেক্ট করুন</option>";
+            for (i = 1985; i < 2100; i++) {
+                content += "<option value=" + i + ">" + i + "</option>";
+            }
+            $("#year").html("");
+            $("#year").append(content);
+        }
+        function LoadLeave(e) {
+            var year = $("#year").val();
+            var leaveType = $("#leaveType").val();
+            if (leaveType == "1" || leaveType == 10) {
+                if (year == null || year == "") {
+                    $("#yearError").text("আবশ্যিক");
+                    e.preventDefault();
+                    return;
+                }
+            }
+            
+            
+
+            var employee = $("#employee").val();
+            if (employee == null || employee == "") {
+                $("#empError").text("আবশ্যিক");
+                e.preventDefault();
+                return;
+            }
+            if (leaveType == null || leaveType == "") {
+                $("#typeError").text("আবশ্যিক");
+                e.preventDefault();
+                return;
+            }
+            
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/ReadBalance",
+                data: { year: year, leaveType: leaveType, employee: employee },
+                success: function (res) {
+                    $("#balanceDiv").html("");
+                    $("#balanceDiv").append(res);
+
+                }
+
+            });
+        }
+
+    </script>
+}

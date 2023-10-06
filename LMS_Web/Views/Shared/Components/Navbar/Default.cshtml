@@ -1,0 +1,14 @@
+﻿@model LMS_Web.ViewModels.NavModelVm
+
+
+<div class="d-none d-md-block m-auto mr-md-3 my-2 my-md-0">
+    <span class="d-inline-block">
+        <img src="@Model.Image" width="45" class="img-thumbnail" />
+    </span>
+</div>
+
+<div class="d-none d-md-block mr-md-3 my-2 my-md-0">
+    <span class="d-block text-white">@Model.UserPhone ( @Model.FullName )</span>
+    <span class="d-block text-white">Last signed: @Model.LastLoginDate</span>
+    <span class="d-block text-white"></span>
+</div>

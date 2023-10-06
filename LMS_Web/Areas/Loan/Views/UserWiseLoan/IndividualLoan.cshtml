@@ -1,0 +1,44 @@
+﻿@model LMS_Web.Areas.Loan.Models.UserWiseLoan;
+@{
+    ViewData["Title"] = "Calculate";
+    Layout = "~/Areas/Loan/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-6">
+        <form method="post" asp-action="IndividualLoan" enctype="multipart/form-data" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4 card">
+                <h1 class="h5 mb-3 font-weight-bold card-header">Individual Loan Report</h1>
+            </div>
+            <input type="hidden" id="id" asp-for="Id" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">User</label>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required" })
+            </div>
+            <div class="form-group mt-4 text-center">
+
+                <input asp-action="IndividualLoan" type="submit" name="btnValue" id="submitBtn" value="Print" formtarget="_blank" class="btn btn-primary form-control" />
+            </div>
+
+        </form>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Report").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val();
+            }
+            $(function () {
+                $("#AppUserId").select2();
+            });
+
+        });
+
+    </script>
+}
+

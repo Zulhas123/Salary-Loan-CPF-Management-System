@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<LMS_Web.Models.LeaveType>
+
+@{
+    ViewData["Title"] = "ছুটির ধরণ";
+}
+
+
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div class="d-flex justify-content-center mt-4 mb-4">
+    <h2 class="display-5 mt-4 mb-4 p-2">ছুটির ধরণ</h2>
+    @*<a class="btn btn-success btn-sm" asp-action="Create">নতুন যোগ করুন</a>*@
+</div>
+
+<table id="vacationTypes" class="table display table-striped table-borderless custrom-table mb-2">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Quota)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDateTime)
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Quota)
+                    </td>*@
+                <td>
+                    @*@User.Identity.UserOwnName()*@
+                    @Html.DisplayFor(modelItem => item.CreatedBy.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedBy.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDateTime)
+                </td>
+                <!--<td>
+                    <a class="badge badge-success" style="padding:0.5em 0.4em" asp-action="Edit" asp-route-id="@item.Id">পরিবর্তন</a>-->
+                @*<a asp-action="Details" asp-route-id="@item.Id">বিস্তারিত</a> |*@
+                @*<a class="badge badge-danger" style="padding:0.5em 0.4em" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this?')">মুছে ফেলুন</a>*@
+                <!--</td>-->
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#vacationTypes').DataTable();
+        });
+    </script>
+}

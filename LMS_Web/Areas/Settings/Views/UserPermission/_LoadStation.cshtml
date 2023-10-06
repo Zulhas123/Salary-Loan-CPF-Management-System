@@ -1,0 +1,52 @@
+﻿@model IEnumerable<LMS_Web.Areas.Settings.ViewModels.StationVm>
+@{
+    int row = 1;
+}
+<table class="table table-striped table-borderless custrom-table mb-2">
+    <tr>
+        <td>
+            All <input id="allCheck" type="checkbox" onclick="CheckAll()" />
+        </td>
+        <td>
+            Initial State <input type="checkbox" onclick="LoadStation()" />
+        </td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width: 5%">@(row++)</td>
+            <td style="width: 90%">
+                @if (item.HasPermission)
+                {
+                    <input class="allCheckbox" type="checkbox" value="@item.Id" checked="checked" />
+                }
+                else
+                {
+                    <input class="allCheckbox" type="checkbox" value="@item.Id" />
+                }
+                <span>@item.Name</span>
+            </td>
+
+        </tr>
+    }
+
+</table>
+<div class="input-group">
+    <div class="col-12">
+        <input type="submit" class="btn btn-primary float-right" value="Submit" onclick="SaveStation()" />
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#Tax").css('display', 'block');
+    });
+
+    function CheckAll() {
+        if ($("#allCheck").is(":checked")) {
+            $(".allCheckbox").prop("checked", true);;
+        } else {
+            $(".allCheckbox").prop("checked", false);
+        }
+    }
+</script>

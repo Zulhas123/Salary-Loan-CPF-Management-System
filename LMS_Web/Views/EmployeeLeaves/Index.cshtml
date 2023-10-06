@@ -1,0 +1,124 @@
+﻿@model IEnumerable<LMS_Web.Models.EmployeeLeave>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="~/css/datatable.min.css" rel="stylesheet" />
+
+<style>
+    table.dataTable {
+        border-collapse: collapse;
+    }
+
+    table th {
+        font-size: .8rem;
+    }
+
+    table td {
+        font-size: .8rem;
+    }
+
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border-radius: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: .2em .5em;
+    }
+</style>
+
+<h1>Index</h1>
+
+<table class="table" id="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalLeave)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveTaken)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveBalance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveTypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalLeave)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveTaken)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveBalance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDateTime)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts
+{
+    <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+}

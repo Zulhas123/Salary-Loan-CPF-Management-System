@@ -1,0 +1,116 @@
+﻿@model LMS_Web.Areas.Settings.Models.UserTax
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Salary/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+
+    <div class="col-md-6">
+        <form method="post" asp-action="Add" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4 card">
+                <h1 class="h5 mb-3 font-weight-bold card-header border"> Income Tax Setup</h1>
+            </div>
+
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.SuccessMessage</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv">@ViewBag.ErrorMessage</span></label>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">User</label>
+                        <span class="text-danger">*</span>
+                        @Html.DropDownList("AppUserId", new SelectList(ViewBag.Users, "Value", "Text"), "Select User", new { @class = "form-control", @required = "required", @onchange = "LoadTax()" })
+                        @*<select asp-for="AppUserId" class="form-control" onchange="LoadTax()" asp-items="ViewBag.Users" tabindex="10" required></select>*@
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Start Month</label>
+                        <span class="text-danger">*</span>
+                        <select name="month" class="form-control" tabindex="10">
+                            <option value="0">Select Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Total Amount</label>
+                        <span class="text-danger">*</span>
+                        <input asp-for="TotalAmount" class="form-control" required type="number" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label">Fiscal Year</label>
+                        <span class="text-danger">*</span>
+                        <select asp-for="FiscalYearId" class="form-control" onchange="LoadTax()" asp-items="ViewBag.FiscalYear" tabindex="10" required>
+                            @*<option>Select Fiscal Year</option>*@
+                        </select>
+                    </div>
+                    @*<div class="form-group">
+                        <label class="control-label">Start Year</label>
+                        <select id="ddlYears" name="year" class="form-control">Select Year</select>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="control-label">Total Installment</label>
+                        <span class="text-danger">*</span>
+                        <input asp-for="TotalInstallment" required class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="form-group mt-4 text-center">
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+<div style="overflow: auto" id="taxView"></div>
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Tax").css('display', 'block');
+        });
+
+        $(function () {
+            $("#AppUserId").select2();
+        });
+
+        //var currentYear = (new Date()).getFullYear() + 12;
+        //var ddlYears = document.getElementById("ddlYears");
+
+        //for (var i = 2010; i <= currentYear; i++) {
+        //    var option = document.createElement("OPTION");
+        //    option.innerHTML = i;
+        //    option.value = i;
+        //    ddlYears.appendChild(option);
+        //}
+
+        function LoadTax() {           
+            var userId = $("#AppUserId").val();
+            var fiscalYear = $("#FiscalYearId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Salary/Tax/LoadUserTax",
+                data: { userId: userId, fiscalYear: fiscalYear },
+                success: function (res) {
+                    $("#taxView").html("");
+                    $("#taxView").append(res);
+
+                }
+            });
+        }
+    </script>
+}

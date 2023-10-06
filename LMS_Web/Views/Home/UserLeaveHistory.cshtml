@@ -1,0 +1,222 @@
+﻿@{
+    ViewData["Title"] = "UserLeaveHistory";
+    var userId = ViewBag.UserId;
+}
+<input type="hidden" value="@userId" id="hiddenUserId" />
+<input type="hidden" value="@ViewBag.DepartmentId" id="hiddenDepId" />
+<input type="hidden" value="@ViewBag.SectionId" id="hiddenSecId" />
+<div class="row mt-4 mb-2">
+    <div class="col-md-12">
+        <form class="form-signin create-form bg-white rounded border shadow-sm p-4" method="post">
+            <div class="text-center mb-5">
+                <h1 class="h5 mb-3 font-weight-bold">পূর্ণ ছুটির বিবরন</h1>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-row form-group align-items-center">
+                        <label class="col-3">উইং</label>
+                        <div class="col-9">
+
+                            <select id="wing" class="form-control" onchange="LoadDepartment()" asp-items='new SelectList(ViewBag.Wing,"Id","Name",ViewBag.WingId)'>
+                                <option value="">উইং নির্ধারণ করুন</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-row form-group align-items-center">
+                        <label class="col-3">বিভাগ</label>
+                        <div class="col-9">
+                            <select id="division" class="form-control" onchange="LoadSection()" asp-items="@(new SelectList(String.Empty,"Id","Text"))">
+                                <option value="">বিভাগ নির্ধারণ করুন</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-row form-group align-items-center">
+                        <label class="col-3">শাখা</label>
+                        <div class="col-9">
+                            <select id="section" class="form-control" onchange="LoadUser()" asp-items="@(new SelectList(String.Empty,"Id","Text"))">
+                                <option value="">শাখা নির্ধারণ করুন</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row align-items-center justify-content-center">
+                <div class="col">
+                    <div class="form-row form-group align-items-center">
+                        <label class="col-3">কর্মকর্তা</label>
+                        <div class="col-9">
+                            <select required="required" name="userId" id="userId" class="form-control" asp-items="@(new SelectList(String.Empty, "Id", "Text"))">
+                                <option value="">কর্মকর্তা নির্ধারণ করুন</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-row form-group align-items-center">
+                        <label class="col-3">ছুটির ধরন</label>
+                        <div class="col-9">
+                            <select name="leaveTypeId" id="leaveTypeId" asp-items="@ViewBag.LeaveType" class="form-control">
+                                <option value="">সকল ছুটি</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" onclick="LoadLeaveHistory()" class="btn btn-success">সার্চ করুন</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div id="partialViewDiv"></div>
+
+
+
+
+
+@section scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            var wingId = $("#wing").val();
+            if (wingId != "") {
+                LoadDepartment();
+            }
+        });
+
+        function LoadLeaveHistory() {
+            var userId = $("#userId").val();
+            var leaveTypeId = $("#leaveTypeId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Home/UserLeaveDetailsHistory",
+                data: { userId: userId, leaveTypeId: leaveTypeId },
+                success: function (res) {
+                    $("#partialViewDiv").html("");
+                    $("#partialViewDiv").append(res);
+
+                }
+
+            });
+        }
+
+
+        function LoadDepartment() {
+            var wingId = $("#wing").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadDepartmentByWingId",
+                data: { wingId: wingId },
+                success: function (res) {
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    var depId = $("#hiddenDepId").val();
+                    $.each(res,
+                        function (index, itemData) {
+                            if (depId == itemData.id) {
+                                content += '<option selected="selected" value=' +
+                                    itemData.id +
+                                    '>' +
+                                    itemData.name +
+                                    '</option>';
+                            } else {
+                                content += '<option value=' + itemData.id + '>' + itemData.name + '</option>';
+                            }
+
+                        })
+                    $("#division").html("");
+                    $("#division").append(content);
+
+                    if (depId != "") {
+                        LoadSection();
+
+                    }
+
+                }
+
+            });
+        }
+
+        function LoadSection() {
+
+            var departmentId = $("#division").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadSectionByDepartmentId",
+                data: { departmentId: departmentId },
+                success: function (res) {
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    var secId = $("#hiddenSecId").val();
+                    $.each(res,
+                        function (index, itemData) {
+                            if (secId == itemData.id) {
+                                content += '<option selected="selected" value=' +
+                                    itemData.id +
+                                    '>' +
+                                    itemData.name +
+                                    '</option>';
+                            } else {
+                                content += '<option value=' + itemData.id + '>' + itemData.name + '</option>';
+                            }
+
+                        })
+                    $("#section").html("");
+                    $("#section").append(content);
+
+                    if (secId != "") {
+                        LoadUser();
+
+                    }
+
+                }
+
+            });
+        }
+
+        function LoadUser() {
+            var sectionId = $("#section").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Leaves/LoadUserBySectionId",
+                data: { sectionId: sectionId },
+                success: function (res) {
+                    var content = '<option value="">নির্ধারন করুন</option>';
+                    var userId = $("#hiddenUserId").val();
+                    $.each(res,
+                        function (index, itemData) {
+                            if (userId == itemData.id) {
+                                content += '<option selected="selected" value=' + itemData.id + '>' + itemData.fullName + '</option>';
+                            } else {
+
+                                content += '<option value=' + itemData.id + '>' + itemData.fullName + '</option>';
+                            }
+                        })
+                    $("#userId").html("");
+                    $("#userId").append(content);
+                    if (userId != "") {
+                        LoadLeaveHistory();
+                    }
+
+                }
+
+            });
+        }
+    </script>
+
+}

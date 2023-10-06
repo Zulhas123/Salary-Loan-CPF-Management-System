@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Calculate";
+    Layout = "~/Areas/Salary/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-8">
+        <form method="post" asp-action="UserSpecificSalaryReport" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold card-header"> User Specific Salary </h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">User</label>
+                <span class="text-danger">*</span>
+                @Html.DropDownList("AppUserId", new SelectList(ViewBag.users, "Value", "Text"), "Select User", new { @class = "form-control",@required="required"})
+            </div>
+            <div class="form-group">
+                <label class="control-label">Month</label>
+                <select name="month" class="form-control" tabindex="10" id="Month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Year</label>
+                <select required="required" id="ddlYears" name="year" class="form-control"></select>
+                <span class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group mt-4 text-center">
+                <input type="submit" name="btnValue" id="submitBtn" value="Print" formtarget="_blank" class="btn btn-primary form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#Report").css("display", "block");
+            $("#AppUserId").select2();
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            $("#Month").val(month);
+
+            var currentYear = year + 10;
+            var ddlYears = document.getElementById("ddlYears");
+
+            for (var i = 2022; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                if (i == year) {
+                    option.setAttribute("selected", year);
+                }
+                ddlYears.appendChild(option);
+            }
+        });
+
+
+    </script>
+}

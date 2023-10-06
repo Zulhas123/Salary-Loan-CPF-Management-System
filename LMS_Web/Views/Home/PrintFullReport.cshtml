@@ -1,0 +1,183 @@
+﻿@using LMS_Web.Common
+@model IEnumerable<LMS_Web.Models.LeaveApplication>
+@{
+    ViewData["Title"] = "PrintFullReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<style>
+    #print:last-child {
+        page-break-after: auto;
+    }
+</style>
+<div class="row justify-content-center ml-5 mr-5 mt-3" id="print">
+    <div class="col-12 bg-white mt-5 pb-5">
+        <div class="row justify-content-between ml-5 mr-5 mt-5">
+            <div class="col-3">
+                <img src="~/image/logo.png" class="mt-5 img-fluid" />
+            </div>
+            <div class="col-6 mt-5">
+                <h5 class="text-center font-weight-bold">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h5>
+                <h6 class="text-center">বাংলাদেশ পাট গবেষণা ইনস্টিটিউট</h6>
+                <p class="text-center font-weight-light m-0">মানিক মিয়া এভিনিউ, ঢাকা-১২০৭ </p>
+                <p class="text-center m-0">www.bjri.gov.bd </p>
+            </div>
+            <div class="col-3 mt-5 pl-0">
+                <p class="text-center font-weight-lighter text-bold m-0">ফোনঃ ৯১১০৮৬৮, </p>
+                <p class="text-center font-weight-light ml-4 mr-0 mt-0 mb-0"> ৮১২১৯৩১-২ </p>
+                <p class="text-center font-weight-light m-0">ফ্যাক্সঃ ০২-৯১১০৮৮১৫ </p>
+                <p class="text-center font-weight-light m-0">ইমেইলঃ bjriinfo@yahoo.com </p>
+            </div>
+        </div>
+        <div class="row justify-content-center ml-5 mr-5">
+            <div class="col-12">
+                <div class="print-text mt-5">
+                    <p class="font-weight-bold">@ViewBag.EmployeeInfo</p>
+                    <div class="row justify-content-between mt-3">
+                        <p class="col">জন্ম তারিখঃ @ViewBag.BirthDate</p>
+                        <p class="col">যোগদানের তারিখঃ @ViewBag.JoiningDate</p>
+                        <p class="col">প্রিন্টের তারিখঃ @DateTime.Now.ToString("dd-MMM-yyyy")</p>
+                    </div>
+                    <div class="row justify-content-between">
+                        <p class="col">পি এল আর এর তারিখঃ @ViewBag.PlrDate</p>
+
+                    </div>
+                </div>
+                <p class="mt-2 font-weight-bold">প্রাপ্য অর্জিত ছুটিঃ অবশিষ্ট ছুটিঃ</p>
+                <table class="table table-bordered display">
+                    <tr>
+                        <th>ছুটির ধরন</th>
+                        <th>প্রাপ্য ছূটি</th>
+                        <th>ভোগকৃত ছুটি</th>
+                        <th>অবশিষ্ট</th>
+                    </tr>
+                    <tr>
+                        <td>অর্জিত পূর্ণ গড়</td>
+                        <td>@ViewBag.TotalFullEarned</td>
+                        <td>@ViewBag.FullEarLeaveObtained</td>
+                        <td>@ViewBag.EarnLeaveFullBalance দিন (@(DayToYear.Days(ViewBag.EarnLeaveFullBalance)))</td>
+                    </tr>
+                    <tr>
+                        <td>অর্জিত অর্ধগড়</td>
+                        <td>@ViewBag.TotalHalfEarned</td>
+                        <td>@ViewBag.HalfEarLeaveObtained</td>
+                        <td>@ViewBag.EarnLeaveHalfBalance (পূর্ণ গড় @(ViewBag.EarnLeaveHalfBalance / 2)) দিন (@(DayToYear.Days(ViewBag.EarnLeaveHalfBalance)))</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="font-weight-bolder">মোট প্রাপ্য</span> @ViewBag.TotalEarnLeave  দিন (@(DayToYear.Days(ViewBag.TotalEarnLeave))</td>
+                        <td><span class="font-weight-bolder">মোট ভোগকৃত </span> @ViewBag.TotalEarnLeaveObtained  দিন (@(DayToYear.Days(ViewBag.TotalEarnLeaveObtained))</td>
+                        <td><span class="font-weight-bolder">মোট অবশিষ্ট</span> @((ViewBag.EarnLeaveHalfBalance / 2) + ViewBag.EarnLeaveFullBalance)  দিন (@(DayToYear.Days((ViewBag.EarnLeaveHalfBalance / 2) + ViewBag.EarnLeaveFullBalance)))</td>
+                    </tr>
+                    @if (ViewBag.leaveId != 3)
+                    {
+                        <tr>
+                            <td>নৈমিত্তিক</td>
+                            <td>@ViewBag.CasualTotal</td>
+                            <td>@ViewBag.CasualObtained</td>
+                            <td>@ViewBag.CasualLeaveBalance দিন (@(DayToYear.Days(ViewBag.CasualLeaveBalance)))</td>
+                        </tr>
+                        <tr>
+                            <td>অধ্যয়ন</td>
+                            <td>@ViewBag.TotalStudyLeave</td>
+                            <td>@ViewBag.StudyLeaveObtained</td>
+                            <td>@ViewBag.StudyLeaveBalance দিন (@(DayToYear.Days(ViewBag.StudyLeaveBalance)))</td>
+                        </tr>
+                        <tr>
+                            <td>ঐচ্ছিক</td>
+                            <td>@ViewBag.TotalOptional</td>
+                            <td>@ViewBag.OptionalObtained</td>
+                            <td>@ViewBag.OptionalLeaveBalance দিন (@(DayToYear.Days(ViewBag.OptionalLeaveBalance)))</td>
+                        </tr>
+                        @*<tr>
+                                <td>অসাধারণ</td>
+                                <td></td>
+                                <td></td>
+                                <td>@ViewBag.ExtraOrdinaryLeave দিন (@(DayToYear.Days(ViewBag.ExtraOrdinaryLeave)))</td>
+                            </tr>*@
+                        <tr>
+                            <td>অক্ষমতা জনিত বিশেষ</td>
+                            <td>@ViewBag.TotalSd</td>
+                            <td>@ViewBag.SdObtained</td>
+                            <td>@ViewBag.specialDisabilityLeaveBalance দিন (@(DayToYear.Days(ViewBag.specialDisabilityLeaveBalance)))</td>
+                        </tr>
+                        <tr>
+                            <td>প্রসূতি</td>
+                            <td>প্রযোজ্য নয়</td>
+                            <td>প্রযোজ্য নয়</td>
+                            @if (ViewBag.MaternityLeaveBalance == 0)
+                            {
+                                <td>প্রযোজ্য নয়</td>
+                            }
+                            else
+                            {
+                                <td>২ বার (প্রতি বার 6 মাস) </td>
+                                <td>@ViewBag.MatertityObtained</td>
+                                <td>@ViewBag.MaternityLeaveBalance দিন (@(DayToYear.Days(ViewBag.MaternityLeaveBalance)))</td>
+                            }
+                        </tr>
+                    }
+                </table>
+
+                <p class="mt-5 font-weight-bold">ছূটি নিয়েছেনঃ</p>
+                <table class="table table-bordered display">
+                    <tr>
+                        <th>ছুটির ধরণ</th>
+                        <th>শুরুর দিন</th>
+                        <th>শেষ দিন</th>
+                        <th>কারণ</th>
+                        <th>দিন</th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.LeaveType.Name</td>
+                            <td>@item.FromDate.ToString("dd-MMM-yyyy")</td>
+                            <td>@item.ToDate.ToString("dd-MMM-yyyy")</td>
+                            <td>@item.Reason</td>
+                            <td>@item.TotalDays</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-end align-items-end mt-5">
+            <div class="col-3 mt-5 mr-5">
+                <div class="border-top text-center ml-3 mr-3">
+                    স্বাক্ষর
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row justify-content-center ml-5 mr-5">
+    <div class="col-12 p-0">
+        <button class="btn btn-success mt-5 btn-lg" onclick="printDiv('print')">প্রিন্ট</button>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+{
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+}
+

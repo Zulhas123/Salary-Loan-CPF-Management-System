@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "CalculateLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex align-content-center mt-4 mb-4 ml-auto mr-auto">
+    <h1 class="display-5 mr-auto text-center">ছুটির হিসাব করুন</h1>
+    <div>
+        <form asp-action="CalculateLeaveBalance" method="post">
+            <input type="submit" value="Calculate" class="btn btn-success btn-lg" />
+        </form>
+    </div>
+</div>
+<div id="overlay" style="display:none;">
+    <div class="spinner"></div>
+    <br />
+    Loading...
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('input').click(function () {
+                $('#overlay').fadeIn().delay(2000).fadeOut();
+            });
+        });
+    </script>
+}

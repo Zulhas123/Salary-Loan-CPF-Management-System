@@ -1,0 +1,46 @@
+﻿@model LMS_Web.Models.Wing
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="row justify-content-center mt-4 mb-2">
+    <div class="col-md-5">
+        <form asp-action="Create" class="form-signin create-form bg-white rounded border shadow-sm p-4">
+            <div class="text-center mb-4">
+                <h1 class="h5 mb-3 font-weight-bold">উইংস</h1>
+            </div>
+            <div id="MessageDiv" style="text-align: center;">
+                <label style="color:green"><span id="SuccessMessageDiv">@ViewBag.Success</span></label>
+                <label style="color:red"><span id="ErrorMessageDiv" style="color: red">@ViewBag.Error</span></label>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" id="id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input required="required" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameBangla" class="control-label"></label>
+                <input asp-for="NameBangla" required="required" class="form-control" />
+                <span asp-validation-for="NameBangla" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4 text-center">
+                <a class="btn btn-secondary" asp-action="Index">List</a>
+                <input type="submit" name="btnValue" id="submitBtn" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#Settings").css("display", "block");
+            var id = $("#id").val();
+            if (id != 0) {
+                $("#submitBtn").val("Update");
+            }
+        });
+    </script>
+                }
